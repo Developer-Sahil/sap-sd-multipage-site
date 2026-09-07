@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Available-to-Promise (ATP) · SAP SD Master Guide</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <script src="assets/js/tailwind-config.js"></script>
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased selection:bg-blue-500 selection:text-white">
+
+    <div id="mobileHeaderMount"></div>
+
+    <div class="flex min-h-screen">
+        <aside id="sidebar" class="fixed inset-y-0 left-0 z-40 w-72 bg-slate-900 text-slate-300 transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out flex flex-col shadow-2xl"></aside>
+
+        <main class="flex-1 lg:ml-72 p-4 md:p-8 lg:p-12 max-w-7xl mx-auto pt-20 lg:pt-8 space-y-6">
+
+            <section id="atp-deep-dive" class="space-y-6 scroll-mt-24">
+                <div class="border-b border-slate-200 pb-4">
+                    <h2 class="text-2xl font-bold text-slate-900 flex items-center space-x-3">
+                        <span class="w-8 h-8 rounded-lg bg-teal-100 text-teal-700 flex items-center justify-center text-sm font-bold">5</span>
+                        <span>Available-to-Promise (ATP) Mechanics</span>
+                    </h2>
+                    <p class="text-slate-600 text-sm mt-1">Understanding fulfillment feasibility, scheduling logic, and cumulative availability checks.</p>
+                </div>
+
+                <!-- What is ATP Hero Card -->
+                <div class="p-6 rounded-2xl bg-gradient-to-r from-teal-900 via-slate-900 to-indigo-950 text-white shadow-xl space-y-4">
+                    <div class="flex items-center space-x-2 text-teal-400 font-mono text-xs uppercase font-bold tracking-wider">
+                        <i class="fa-solid fa-truck-fast"></i>
+                        <span>Core SD Fulfillment Question</span>
+                    </div>
+                    <h3 class="text-xl md:text-2xl font-extrabold">"Can we fulfill this order? If yes, how much can we deliver and when?"</h3>
+                    <p class="text-slate-300 text-xs md:text-sm leading-relaxed">
+                        When a sales order is entered, SAP instantly executes an ATP check against available stock, incoming purchase orders, production receipts, and existing customer commitments to calculate accurate delivery promises.
+                    </p>
+                </div>
+
+                <!-- ATP Check Flow & Level Check Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Check Flow -->
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                        <h3 class="font-bold text-slate-800 text-base flex items-center space-x-2">
+                            <i class="fa-solid fa-arrows-split-up-and-left text-teal-600"></i>
+                            <span>The 4-Step ATP Order Flow</span>
+                        </h3>
+                        <div class="space-y-2.5 text-xs">
+                            <div class="flex items-start space-x-3 p-2.5 rounded-lg bg-slate-50 border border-slate-100">
+                                <span class="w-5 h-5 rounded-full bg-teal-600 text-white flex items-center justify-center font-bold text-[10px] shrink-0">1</span>
+                                <div><strong class="text-slate-800">Requested Date & Qty:</strong> Customer specifies desired delivery date and quantity.</div>
+                            </div>
+                            <div class="flex items-start space-x-3 p-2.5 rounded-lg bg-slate-50 border border-slate-100">
+                                <span class="w-5 h-5 rounded-full bg-teal-600 text-white flex items-center justify-center font-bold text-[10px] shrink-0">2</span>
+                                <div><strong class="text-slate-800">Backward Scheduling:</strong> System computes required Material Availability Date.</div>
+                            </div>
+                            <div class="flex items-start space-x-3 p-2.5 rounded-lg bg-slate-50 border border-slate-100">
+                                <span class="w-5 h-5 rounded-full bg-teal-600 text-white flex items-center justify-center font-bold text-[10px] shrink-0">3</span>
+                                <div><strong class="text-slate-800">Stock & Receipts Check:</strong> Evaluates stock balances and scheduled stock receipts.</div>
+                            </div>
+                            <div class="flex items-start space-x-3 p-2.5 rounded-lg bg-slate-50 border border-slate-100">
+                                <span class="w-5 h-5 rounded-full bg-teal-600 text-white flex items-center justify-center font-bold text-[10px] shrink-0">4</span>
+                                <div><strong class="text-slate-800">System Confirmation:</strong> Proposes Full Confirmation, Partial Split, or Proposed Future Date.</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Level of ATP Check -->
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                        <h3 class="font-bold text-slate-800 text-base flex items-center space-x-2">
+                            <i class="fa-solid fa-layer-group text-indigo-600"></i>
+                            <span>Levels of ATP Check</span>
+                        </h3>
+                        <p class="text-slate-600 text-xs">
+                            ATP checks can be executed at the <strong>Plant Level</strong> (combining all storage locations) or restricted to a specific <strong>Storage Location Level</strong> based on customizing.
+                        </p>
+
+                        <div class="bg-slate-900 text-white p-4 rounded-xl space-y-3 font-mono text-xs">
+                            <div class="flex justify-between items-center text-slate-400 border-b border-slate-800 pb-2">
+                                <span>Plant 1010 Total Stock</span>
+                                <span class="text-emerald-400 font-bold">150 Pcs</span>
+                            </div>
+                            <div class="grid grid-cols-2 gap-2 text-center">
+                                <div class="bg-slate-800 p-2 rounded border border-slate-700">
+                                    <div class="text-slate-400 text-[10px]">SLoc A</div>
+                                    <div class="text-amber-400 font-bold text-sm">50 Pcs</div>
+                                </div>
+                                <div class="bg-slate-800 p-2 rounded border border-slate-700">
+                                    <div class="text-slate-400 text-[10px]">SLoc B</div>
+                                    <div class="text-amber-400 font-bold text-sm">100 Pcs</div>
+                                </div>
+                            </div>
+                            <p class="text-[11px] text-slate-400 font-sans italic">
+                                * If check is set to SLoc A, an order for 70 Pcs will fail even though Plant 1010 has 150 Pcs!
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Material Availability Date & Backward vs Forward Scheduling -->
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-6">
+                    <div>
+                        <h3 class="font-bold text-slate-800 text-base flex items-center space-x-2">
+                            <i class="fa-solid fa-clock text-blue-600"></i>
+                            <span>Material Availability Date & Delivery Scheduling</span>
+                        </h3>
+                        <p class="text-slate-600 text-xs mt-1">
+                            SAP checks ATP against the calculated <strong>Material Availability Date</strong> rather than the requested delivery date.
+                        </p>
+                    </div>
+
+                    <!-- Scheduling Timeline Diagram -->
+                    <div class="bg-slate-50 p-5 rounded-xl border border-slate-200 space-y-4">
+                        <div class="font-bold text-xs text-slate-700 uppercase font-mono tracking-wider">Backward Scheduling Sequence</div>
+
+                        <div class="flex flex-col md:flex-row items-center justify-between gap-2 text-xs">
+                            <div class="w-full text-center p-3 rounded-lg bg-emerald-100 text-emerald-900 border border-emerald-200">
+                                <div class="font-bold">Requested Delivery Date</div>
+                                <div class="text-[11px] text-emerald-700 font-mono mt-0.5">e.g. July 20</div>
+                            </div>
+                            <i class="fa-solid fa-arrow-left text-slate-400 hidden md:inline"></i>
+                            <i class="fa-solid fa-arrow-down text-slate-400 md:hidden"></i>
+
+                            <div class="w-full text-center p-3 rounded-lg bg-blue-100 text-blue-900 border border-blue-200">
+                                <div class="font-bold">Transportation Lead Time</div>
+                                <div class="text-[11px] text-blue-700 font-mono mt-0.5">Transit Duration</div>
+                            </div>
+                            <i class="fa-solid fa-arrow-left text-slate-400 hidden md:inline"></i>
+                            <i class="fa-solid fa-arrow-down text-slate-400 md:hidden"></i>
+
+                            <div class="w-full text-center p-3 rounded-lg bg-indigo-100 text-indigo-900 border border-indigo-200">
+                                <div class="font-bold">Picking & Packing</div>
+                                <div class="text-[11px] text-indigo-700 font-mono mt-0.5">Warehouse Handling</div>
+                            </div>
+                            <i class="fa-solid fa-arrow-left text-slate-400 hidden md:inline"></i>
+                            <i class="fa-solid fa-arrow-down text-slate-400 md:hidden"></i>
+
+                            <div class="w-full text-center p-3 rounded-lg bg-purple-600 text-white font-bold shadow-md">
+                                <div>Material Availability Date</div>
+                                <div class="text-[11px] text-purple-200 font-mono mt-0.5">Check Date (July 17)</div>
+                            </div>
+                        </div>
+
+                        <!-- Forward Scheduling Callout -->
+                        <div class="mt-4 p-4 rounded-xl bg-amber-50 border border-amber-200 text-xs space-y-1">
+                            <div class="font-bold text-amber-950 flex items-center space-x-2">
+                                <i class="fa-solid fa-forward text-amber-600"></i>
+                                <span>Forward Scheduling Trigger</span>
+                            </div>
+                            <p class="text-slate-700">
+                                If stock is unavailable on the calculated Material Availability Date (e.g. July 17), SAP switches to <strong>Forward Scheduling</strong>. It finds the next earliest date stock will be available (or uses <strong>Replenishment Lead Time</strong>) and calculates a new proposed delivery date for the customer.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cumulative ATP Quantity & First Come, First Served -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Cumulative Formula -->
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                        <h3 class="font-bold text-slate-800 text-base flex items-center space-x-2">
+                            <i class="fa-solid fa-calculator text-emerald-600"></i>
+                            <span>Cumulative ATP Quantity Formula</span>
+                        </h3>
+                        <p class="text-slate-600 text-xs">
+                            ATP does not merely check current warehouse stock. It computes future availability dynamically:
+                        </p>
+
+                        <div class="bg-slate-900 text-slate-100 p-4 rounded-xl font-mono text-xs space-y-2 border border-slate-800">
+                            <div class="flex justify-between text-emerald-400">
+                                <span>Current Physical Stock</span>
+                                <span>+ 80</span>
+                            </div>
+                            <div class="flex justify-between text-blue-400">
+                                <span>Incoming Purchase Orders / Planned Receipts</span>
+                                <span>+ 60</span>
+                            </div>
+                            <div class="flex justify-between text-red-400 border-b border-slate-800 pb-2">
+                                <span>Existing Confirmed Sales Orders</span>
+                                <span>- 0</span>
+                            </div>
+                            <div class="flex justify-between font-bold text-sm text-yellow-400 pt-1">
+                                <span>Cumulative ATP Quantity</span>
+                                <span>= 140 Units</span>
+                            </div>
+                        </div>
+                        <p class="text-xs text-slate-500">
+                            When a new order for 70 units is placed, it is <strong>confirmed</strong>, and the remaining Cumulative ATP quantity reduces to 70 units for future checks.
+                        </p>
+                    </div>
+
+                    <!-- First-Come, First-Served & Delivery Agreements -->
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                        <h3 class="font-bold text-slate-800 text-base flex items-center space-x-2">
+                            <i class="fa-solid fa-ranking-star text-amber-600"></i>
+                            <span>First-Come First-Served & Delivery Agreements</span>
+                        </h3>
+
+                        <div class="space-y-3 text-xs">
+                            <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 space-y-1">
+                                <div class="font-bold text-slate-800">First-Come, First-Served Reservation</div>
+                                <p class="text-slate-600">Order A reserves 70 units. Subsequent Order B (requesting 100 units) will only find 70 units available, forcing partial confirmation or forward delivery proposal.</p>
+                            </div>
+
+                            <div class="grid grid-cols-2 gap-2">
+                                <div class="p-3 bg-blue-50/50 rounded-xl border border-blue-100 space-y-1">
+                                    <div class="font-bold text-blue-900">Complete Delivery</div>
+                                    <p class="text-slate-600 text-[11px]">All line items must be confirmed together. If Item B is delayed, Item A is held until both are ready.</p>
+                                </div>
+                                <div class="p-3 bg-teal-50/50 rounded-xl border border-teal-100 space-y-1">
+                                    <div class="font-bold text-teal-900">Partial Delivery</div>
+                                    <p class="text-slate-600 text-[11px]">Partial quantities are shipped as soon as available, with remaining split into backorders.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- aATP (Advanced ATP) & ATP vs MRP -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Advanced ATP (aATP) -->
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                        <div class="flex items-center space-x-2">
+                            <span class="px-2.5 py-0.5 rounded-full bg-indigo-100 text-indigo-800 text-xs font-bold font-mono">S/4HANA</span>
+                            <h3 class="font-bold text-slate-800 text-base">aATP & Alternative-Based Confirmation (ABC)</h3>
+                        </div>
+                        <p class="text-slate-600 text-xs">
+                            In SAP S/4HANA, <strong>Advanced ATP (aATP)</strong> introduces intelligent automated substitution logic:
+                        </p>
+
+                        <!-- Plant Substitution Diagram -->
+                        <div class="bg-slate-900 text-white p-4 rounded-xl space-y-3 text-xs font-mono">
+                            <div class="text-slate-400 text-[11px]">ABC Automatic Substitution Hierarchy:</div>
+                            <div class="flex items-center justify-between p-2 bg-slate-800 rounded border border-red-900/60">
+                                <span>Requested: Plant 1010</span>
+                                <span class="text-red-400 font-bold">Out of Stock</span>
+                            </div>
+                            <div class="text-center text-teal-400 text-xs"><i class="fa-solid fa-arrow-down"></i> Auto-Check Alternative</div>
+                            <div class="flex items-center justify-between p-2 bg-slate-800 rounded border border-emerald-900/60">
+                                <span>Alternate: Plant 1020</span>
+                                <span class="text-emerald-400 font-bold">Confirmed Stock ✅</span>
+                            </div>
+                        </div>
+                        <p class="text-slate-500 text-[11px]">
+                            aATP automatically checks alternative plants, storage locations, or substitute materials before rejecting an order date.
+                        </p>
+                    </div>
+
+                    <!-- ATP vs MRP Comparison -->
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                        <h3 class="font-bold text-slate-800 text-base flex items-center space-x-2">
+                            <i class="fa-solid fa-scale-balanced text-violet-600"></i>
+                            <span>ATP vs. MRP: Classic Interview Question</span>
+                        </h3>
+
+                        <div class="space-y-3 text-xs">
+                            <div class="p-3 rounded-xl bg-violet-50 border border-violet-200 space-y-1">
+                                <div class="font-bold text-violet-950 text-sm">ATP (Available-to-Promise)</div>
+                                <div class="font-semibold text-violet-800">Answers: "Can I promise this order to the customer right now?"</div>
+                                <p class="text-slate-600 text-[11px]">Validates immediate sales feasibility without triggering supply creation.</p>
+                            </div>
+
+                            <div class="p-3 rounded-xl bg-indigo-50 border border-indigo-200 space-y-1">
+                                <div class="font-bold text-indigo-950 text-sm">MRP (Material Requirements Planning)</div>
+                                <div class="font-semibold text-indigo-800">Answers: "How do I procure or produce the missing stock?"</div>
+                                <p class="text-slate-600 text-[11px]">When ATP identifies a shortage, MRP generates Purchase Requisitions or Planned/Production Orders to replenish stock.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Exam & Project Takeaways Callout -->
+                <div class="bg-slate-900 text-white p-6 rounded-2xl shadow-xl space-y-4">
+                    <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+                        <h3 class="text-base font-bold text-yellow-400 flex items-center space-x-2">
+                            <i class="fa-solid fa-key"></i>
+                            <span>Top 5 Certification & Project Takeaways for ATP</span>
+                        </h3>
+                        <span class="text-xs font-mono bg-yellow-400/20 text-yellow-300 px-2.5 py-1 rounded-full font-bold">Must Know</span>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs font-sans">
+                        <div class="flex items-start space-x-2 bg-slate-800/80 p-3 rounded-xl border border-slate-700">
+                            <i class="fa-solid fa-check text-emerald-400 mt-0.5"></i>
+                            <span><strong>Material Availability Date:</strong> ATP checks availability against the calculated material availability date, NOT the requested delivery date directly.</span>
+                        </div>
+                        <div class="flex items-start space-x-2 bg-slate-800/80 p-3 rounded-xl border border-slate-700">
+                            <i class="fa-solid fa-check text-emerald-400 mt-0.5"></i>
+                            <span><strong>Forward Scheduling:</strong> If stock is unavailable during backward scheduling, SAP triggers forward scheduling to propose realistic dates.</span>
+                        </div>
+                        <div class="flex items-start space-x-2 bg-slate-800/80 p-3 rounded-xl border border-slate-700">
+                            <i class="fa-solid fa-check text-emerald-400 mt-0.5"></i>
+                            <span><strong>Cumulative ATP Quantity:</strong> Considers physical stock + planned receipts - commitments to determine promise quantity.</span>
+                        </div>
+                        <div class="flex items-start space-x-2 bg-slate-800/80 p-3 rounded-xl border border-slate-700">
+                            <i class="fa-solid fa-check text-emerald-400 mt-0.5"></i>
+                            <span><strong>Replenishment Lead Time (RLT):</strong> If stock is absent, SAP can confirm stock at the end of the material's procurement lead time.</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <div id="topicFooter"></div>
+        </main>
+    </div>
+
+    <script src="assets/js/topics.js"></script>
+    <script src="assets/js/nav.js"></script>
+    <script src="assets/js/common.js"></script>
+</body>
+</html>

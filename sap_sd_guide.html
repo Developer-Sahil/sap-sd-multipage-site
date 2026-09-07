@@ -1,0 +1,1326 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAP SD Interactive Master Guide (Chapters 1–3)</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        sap: {
+                            blue: '#0a6ed1',
+                            dark: '#0f172a',
+                            gold: '#f59e0b',
+                            accent: '#2563eb',
+                            light: '#f8fafc',
+                            card: '#ffffff'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0a6ed1 100%);
+        }
+        .tab-active {
+            border-bottom: 3px solid #0a6ed1;
+            color: #0a6ed1;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased selection:bg-blue-500 selection:text-white">
+
+    <!-- Mobile Header Navigation Toggle -->
+    <header class="lg:hidden fixed top-0 left-0 right-0 z-50 glass-panel border-b border-slate-200 px-4 py-3 flex items-center justify-between shadow-sm">
+        <div class="flex items-center space-x-3">
+            <div class="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center text-white font-bold text-sm">SD</div>
+            <span class="font-bold text-slate-800 text-base tracking-tight">SAP SD Master Guide</span>
+        </div>
+        <button id="mobileMenuBtn" class="p-2 text-slate-600 hover:text-slate-900 rounded-lg focus:outline-none">
+            <i class="fa-solid fa-bars text-xl"></i>
+        </button>
+    </header>
+
+    <div class="flex min-h-screen">
+        
+        <!-- SIDEBAR NAVIGATION -->
+        <aside id="sidebar" class="fixed inset-y-0 left-0 z-40 w-72 bg-slate-900 text-slate-300 transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out flex flex-col shadow-2xl">
+            <!-- App Branding -->
+            <div class="p-6 border-b border-slate-800 flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-500 flex items-center justify-center text-white font-extrabold text-lg shadow-lg shadow-blue-500/30">
+                    SD
+                </div>
+                <div>
+                    <h1 class="font-bold text-white text-base leading-snug">SAP ERP SD Guide</h1>
+                    <p class="text-xs text-slate-400 font-mono">Chapters 1–3 Framework</p>
+                </div>
+            </div>
+
+            <!-- Reading Progress Bar -->
+            <div class="px-6 py-3 bg-slate-800/50 border-b border-slate-800">
+                <div class="flex justify-between items-center text-xs mb-1 font-medium">
+                    <span class="text-slate-400">Guide Progress</span>
+                    <span id="progressText" class="text-blue-400 font-mono">0%</span>
+                </div>
+                <div class="w-full bg-slate-700 h-1.5 rounded-full overflow-hidden">
+                    <div id="progressBar" class="bg-gradient-to-r from-blue-500 to-cyan-400 h-full w-0 transition-all duration-200"></div>
+                </div>
+            </div>
+
+            <!-- Nav Links -->
+            <nav class="flex-1 overflow-y-auto p-4 space-y-1.5 text-sm">
+                <a href="#big-picture" class="nav-link flex items-center space-x-3 px-3 py-2.5 rounded-lg hover:bg-slate-800 hover:text-white transition-colors active">
+                    <i class="fa-solid fa-earth-americas w-5 text-center text-blue-400"></i>
+                    <span>1. The Big Picture</span>
+                </a>
+                <a href="#ch1-org" class="nav-link flex items-center space-x-3 px-3 py-2.5 rounded-lg hover:bg-slate-800 hover:text-white transition-colors">
+                    <i class="fa-solid fa-sitemap w-5 text-center text-indigo-400"></i>
+                    <span>2. Enterprise Structure</span>
+                </a>
+                <a href="#ch2-master-data" class="nav-link flex items-center space-x-3 px-3 py-2.5 rounded-lg hover:bg-slate-800 hover:text-white transition-colors">
+                    <i class="fa-solid fa-database w-5 text-center text-emerald-400"></i>
+                    <span>3. Master Data Config</span>
+                </a>
+                <a href="#ch3-sales-docs" class="nav-link flex items-center space-x-3 px-3 py-2.5 rounded-lg hover:bg-slate-800 hover:text-white transition-colors">
+                    <i class="fa-solid fa-file-invoice w-5 text-center text-amber-400"></i>
+                    <span>4. Sales Documents</span>
+                </a>
+                <a href="#atp-deep-dive" class="nav-link flex items-center space-x-3 px-3 py-2.5 rounded-lg hover:bg-slate-800 hover:text-white transition-colors">
+                    <i class="fa-solid fa-boxes-packing w-5 text-center text-teal-400"></i>
+                    <span>5. Available-to-Promise (ATP)</span>
+                </a>
+                <a href="#determination-tool" class="nav-link flex items-center space-x-3 px-3 py-2.5 rounded-lg hover:bg-slate-800 hover:text-white transition-colors">
+                    <i class="fa-solid fa-gears w-5 text-center text-pink-400"></i>
+                    <span>6. Interactive Simulator</span>
+                </a>
+                <a href="#northstar-scenario" class="nav-link flex items-center space-x-3 px-3 py-2.5 rounded-lg hover:bg-slate-800 hover:text-white transition-colors">
+                    <i class="fa-solid fa-route w-5 text-center text-cyan-400"></i>
+                    <span>7. Worked Scenario</span>
+                </a>
+                <a href="#table-reference" class="nav-link flex items-center space-x-3 px-3 py-2.5 rounded-lg hover:bg-slate-800 hover:text-white transition-colors">
+                    <i class="fa-solid fa-table w-5 text-center text-violet-400"></i>
+                    <span>8. Technical Tables</span>
+                </a>
+                <a href="#practice-quiz" class="nav-link flex items-center space-x-3 px-3 py-2.5 rounded-lg hover:bg-slate-800 hover:text-white transition-colors">
+                    <i class="fa-solid fa-graduation-cap w-5 text-center text-yellow-400"></i>
+                    <span>9. Practice Checkpoint</span>
+                </a>
+            </nav>
+
+            <!-- Bottom Footnote -->
+            <div class="p-4 border-t border-slate-800 text-xs text-slate-500 font-mono text-center">
+                ECC 6.0 / mySAP Reference<br>S/4HANA Concepts Included
+            </div>
+        </aside>
+
+        <!-- Overlay for Mobile Menu -->
+        <div id="mobileOverlay" class="fixed inset-0 bg-slate-900/60 z-30 hidden backdrop-blur-sm lg:hidden"></div>
+
+        <!-- MAIN CONTENT AREA -->
+        <main class="flex-1 lg:ml-72 p-4 md:p-8 lg:p-12 max-w-7xl mx-auto pt-20 lg:pt-8 space-y-12">
+            
+            <!-- HERO HEADER -->
+            <section class="rounded-2xl gradient-bg p-8 md:p-12 text-white shadow-2xl relative overflow-hidden">
+                <!-- Background Geometric Accents -->
+                <div class="absolute -right-10 -bottom-10 w-80 h-80 bg-blue-500/10 rounded-full blur-3xl pointer-events-none"></div>
+                <div class="absolute right-1/3 -top-10 w-60 h-60 bg-indigo-500/10 rounded-full blur-2xl pointer-events-none"></div>
+                
+                <div class="relative z-10 max-w-3xl space-y-4">
+                    <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-blue-500/20 border border-blue-400/30 text-blue-300 text-xs font-semibold uppercase tracking-wider">
+                        <i class="fa-solid fa-book-open"></i>
+                        <span>Unified Teaching Guide</span>
+                    </div>
+                    <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight leading-tight">
+                        SAP ERP Sales & Distribution
+                    </h1>
+                    <p class="text-slate-300 text-base md:text-lg leading-relaxed font-light">
+                        Master Chapters 1–3 as a single connected story. Learn how <strong class="text-white font-medium">Organizational Structures</strong> and <strong class="text-white font-medium">Master Data</strong> build the foundation, while <strong class="text-white font-medium">Document Configuration</strong> drives transaction logic.
+                    </p>
+                    <div class="pt-4 flex flex-wrap gap-3">
+                        <a href="#determination-tool" class="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-medium text-sm transition-all shadow-lg shadow-blue-600/30 inline-flex items-center space-x-2">
+                            <i class="fa-solid fa-play text-xs"></i>
+                            <span>Try Logic Visualizer</span>
+                        </a>
+                        <a href="#northstar-scenario" class="px-5 py-2.5 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-slate-200 border border-slate-700 font-medium text-sm transition-all inline-flex items-center space-x-2">
+                            <i class="fa-solid fa-building text-xs"></i>
+                            <span>Explore End-to-End Case</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Three Chapter Chain Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-8 pt-8 border-t border-slate-700/60 text-xs">
+                    <div class="bg-slate-800/40 p-4 rounded-xl border border-slate-700/50 backdrop-blur">
+                        <div class="text-blue-400 font-mono font-bold mb-1">CHAPTER 1</div>
+                        <div class="font-semibold text-sm text-slate-100">Enterprise Structure</div>
+                        <p class="text-slate-400 mt-1">Defines company units, commercial rules, and logistical channels.</p>
+                    </div>
+                    <div class="bg-slate-800/40 p-4 rounded-xl border border-slate-700/50 backdrop-blur">
+                        <div class="text-emerald-400 font-mono font-bold mb-1">CHAPTER 2</div>
+                        <div class="font-semibold text-sm text-slate-100">Master Data Rules</div>
+                        <p class="text-slate-400 mt-1">Reusable records: Customers, Materials, Partners & Inforecords.</p>
+                    </div>
+                    <div class="bg-slate-800/40 p-4 rounded-xl border border-slate-700/50 backdrop-blur">
+                        <div class="text-amber-400 font-mono font-bold mb-1">CHAPTER 3</div>
+                        <div class="font-semibold text-sm text-slate-100">Sales Transactions</div>
+                        <p class="text-slate-400 mt-1">Header, Item, Schedule Line mechanics & Copy Controls.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 1: THE BIG PICTURE -->
+            <section id="big-picture" class="space-y-6 scroll-mt-24">
+                <div class="border-b border-slate-200 pb-4">
+                    <h2 class="text-2xl font-bold text-slate-900 flex items-center space-x-3">
+                        <span class="w-8 h-8 rounded-lg bg-blue-100 text-blue-700 flex items-center justify-center text-sm font-bold">1</span>
+                        <span>The Big Picture: What SAP SD Does</span>
+                    </h2>
+                    <p class="text-slate-600 text-sm mt-1">Understanding the end-to-end Order-to-Cash process flow.</p>
+                </div>
+
+                <!-- Core Paradigm Callout -->
+                <div class="p-4 rounded-xl bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 flex items-start space-x-4">
+                    <i class="fa-solid fa-lightbulb text-blue-600 text-2xl mt-1"></i>
+                    <div>
+                        <h4 class="font-semibold text-blue-950 text-base">The Core Paradigm</h4>
+                        <p class="text-slate-700 text-sm mt-1">
+                            SAP SD is not a random collection of disconnected screens. Saving a single transaction automatically updates downstream logistics, updates inventory levels in real-time, generates financial postings, and drives availability requirements.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Process Flow Chart -->
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                    <h3 class="font-bold text-slate-800 text-base">Standard SD Document Flow</h3>
+                    
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse text-sm">
+                            <thead>
+                                <tr class="bg-slate-100 border-b border-slate-200 text-slate-700">
+                                    <th class="p-3 font-semibold">Business Step</th>
+                                    <th class="p-3 font-semibold">SAP Document / Object</th>
+                                    <th class="p-3 font-semibold">Standard Code (ECC)</th>
+                                    <th class="p-3 font-semibold">Main Business Question Answered</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-100 text-slate-600">
+                                <tr class="hover:bg-slate-50">
+                                    <td class="p-3 font-medium text-slate-800">1. Customer Offer Request</td>
+                                    <td class="p-3">Inquiry / Quotation</td>
+                                    <td class="p-3 font-mono text-xs bg-slate-100 inline-block rounded px-1.5 py-0.5 mt-1">IN / QT</td>
+                                    <td class="p-3">What can we offer, and under what terms?</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50">
+                                    <td class="p-3 font-medium text-slate-800">2. Order Placement</td>
+                                    <td class="p-3">Sales Order</td>
+                                    <td class="p-3 font-mono text-xs bg-blue-100 text-blue-800 inline-block rounded px-1.5 py-0.5 mt-1 font-semibold">TA / OR</td>
+                                    <td class="p-3">What exact products/services must we supply?</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50">
+                                    <td class="p-3 font-medium text-slate-800">3. Shipping Prep</td>
+                                    <td class="p-3">Outbound Delivery</td>
+                                    <td class="p-3 font-mono text-xs bg-slate-100 inline-block rounded px-1.5 py-0.5 mt-1">LF</td>
+                                    <td class="p-3">What items will be picked, packed, and staged?</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50">
+                                    <td class="p-3 font-medium text-slate-800">4. Goods Movement</td>
+                                    <td class="p-3">Goods Issue (PGI)</td>
+                                    <td class="p-3 font-mono text-xs bg-slate-100 inline-block rounded px-1.5 py-0.5 mt-1">mvt 601</td>
+                                    <td class="p-3">Has inventory physically left our ownership/control?</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50">
+                                    <td class="p-3 font-medium text-slate-800">5. Invoicing</td>
+                                    <td class="p-3">Billing Document</td>
+                                    <td class="p-3 font-mono text-xs bg-slate-100 inline-block rounded px-1.5 py-0.5 mt-1">F2</td>
+                                    <td class="p-3">What final monetary amount should be charged?</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50">
+                                    <td class="p-3 font-medium text-slate-800">6. Accounting Integration</td>
+                                    <td class="p-3">FI Accounting Document</td>
+                                    <td class="p-3 font-mono text-xs bg-emerald-100 text-emerald-800 inline-block rounded px-1.5 py-0.5 mt-1">RV Posting</td>
+                                    <td class="p-3">What accounts receivable & revenue postings occur?</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Configuration vs Master Data vs Transactional Data -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-2">
+                        <div class="w-8 h-8 rounded-lg bg-purple-100 text-purple-700 flex items-center justify-center font-bold text-sm">
+                            <i class="fa-solid fa-sliders"></i>
+                        </div>
+                        <h4 class="font-bold text-slate-900">Configuration Layer</h4>
+                        <p class="text-xs text-slate-500">Defines system behavior & policy rules.</p>
+                        <p class="text-xs text-slate-700 bg-slate-50 p-2.5 rounded-lg border border-slate-100 font-mono">
+                            Example: "Standard order TA requires delivery type LF."
+                        </p>
+                    </div>
+
+                    <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-2">
+                        <div class="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold text-sm">
+                            <i class="fa-solid fa-database"></i>
+                        </div>
+                        <h4 class="font-bold text-slate-900">Master Data Layer</h4>
+                        <p class="text-xs text-slate-500">Reusable facts across multiple sales events.</p>
+                        <p class="text-xs text-slate-700 bg-slate-50 p-2.5 rounded-lg border border-slate-100 font-mono">
+                            Example: Customer 100000, Material BVL10, Shipping Condition 01.
+                        </p>
+                    </div>
+
+                    <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-2">
+                        <div class="w-8 h-8 rounded-lg bg-amber-100 text-amber-700 flex items-center justify-center font-bold text-sm">
+                            <i class="fa-solid fa-receipt"></i>
+                        </div>
+                        <h4 class="font-bold text-slate-900">Transactional Layer</h4>
+                        <p class="text-xs text-slate-500">Records a single, specific business event.</p>
+                        <p class="text-xs text-slate-700 bg-slate-50 p-2.5 rounded-lg border border-slate-100 font-mono">
+                            Example: Sales Order 50000123, Outbound Delivery 80000456.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 2: CHAPTER 1 - ENTERPRISE STRUCTURE -->
+            <section id="ch1-org" class="space-y-6 scroll-mt-24">
+                <div class="border-b border-slate-200 pb-4">
+                    <h2 class="text-2xl font-bold text-slate-900 flex items-center space-x-3">
+                        <span class="w-8 h-8 rounded-lg bg-indigo-100 text-indigo-700 flex items-center justify-center text-sm font-bold">2</span>
+                        <span>Chapter 1: Enterprise Structure & Organization</span>
+                    </h2>
+                    <p class="text-slate-600 text-sm mt-1">The foundational backbone governing commercial and logistical rules.</p>
+                </div>
+
+                <!-- Sales Area Formula Banner -->
+                <div class="bg-slate-900 text-white p-6 rounded-2xl shadow-lg space-y-3">
+                    <div class="text-xs font-mono text-indigo-400 font-bold uppercase tracking-wider">Golden Rule of SD</div>
+                    <div class="text-xl md:text-2xl font-extrabold flex flex-wrap items-center gap-2">
+                        <span>Sales Area</span>
+                        <span class="text-slate-500">=</span>
+                        <span class="bg-blue-600 px-3 py-1 rounded-lg text-sm md:text-base font-semibold">Sales Org</span>
+                        <span class="text-slate-500">+</span>
+                        <span class="bg-indigo-600 px-3 py-1 rounded-lg text-sm md:text-base font-semibold">Dist. Channel</span>
+                        <span class="text-slate-500">+</span>
+                        <span class="bg-purple-600 px-3 py-1 rounded-lg text-sm md:text-base font-semibold">Division</span>
+                    </div>
+                    <p class="text-slate-300 text-xs md:text-sm leading-relaxed">
+                        Every sales transaction must belong to a valid Sales Area. A customer master can maintain separate payment terms, prices, and shipping rules for different Sales Areas.
+                    </p>
+                </div>
+
+                <!-- Organizational Units Cards Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm hover:border-indigo-300 transition-colors">
+                        <div class="flex items-center space-x-3 mb-2">
+                            <span class="w-7 h-7 rounded bg-blue-100 text-blue-700 flex items-center justify-center font-bold text-xs">SO</span>
+                            <h4 class="font-bold text-slate-800">Sales Organization</h4>
+                        </div>
+                        <p class="text-xs text-slate-600">Highest commercial selling unit. Responsible for product liability, negotiating terms, and commercial terms. Assigned to <strong>one Company Code</strong>.</p>
+                    </div>
+
+                    <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm hover:border-indigo-300 transition-colors">
+                        <div class="flex items-center space-x-3 mb-2">
+                            <span class="w-7 h-7 rounded bg-indigo-100 text-indigo-700 flex items-center justify-center font-bold text-xs">DC</span>
+                            <h4 class="font-bold text-slate-800">Distribution Channel</h4>
+                        </div>
+                        <p class="text-xs text-slate-600">The route to market (e.g., Wholesale 10, Retail 20, Internet Sales). Allows different pricing and minimum order policies for identical materials.</p>
+                    </div>
+
+                    <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm hover:border-indigo-300 transition-colors">
+                        <div class="flex items-center space-x-3 mb-2">
+                            <span class="w-7 h-7 rounded bg-purple-100 text-purple-700 flex items-center justify-center font-bold text-xs">DV</span>
+                            <h4 class="font-bold text-slate-800">Division</h4>
+                        </div>
+                        <p class="text-xs text-slate-600">Product line or service group (e.g., Spare Parts 01, Machinery 02). Used to perform product-line analysis and assign partial delivery agreements.</p>
+                    </div>
+
+                    <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm hover:border-indigo-300 transition-colors">
+                        <div class="flex items-center space-x-3 mb-2">
+                            <span class="w-7 h-7 rounded bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold text-xs">PL</span>
+                            <h4 class="font-bold text-slate-800">Plant & Shipping Point</h4>
+                        </div>
+                        <p class="text-xs text-slate-600"><strong>Plant:</strong> Physical location for inventory storage, ATP stock checks, and procurement.<br><strong>Shipping Point:</strong> Location that handles picking, packing, and dispatch.</p>
+                    </div>
+                </div>
+
+                <!-- Customer Master - 3 Views Interactive Visualizer -->
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                    <h3 class="font-bold text-slate-800 text-base flex items-center space-x-2">
+                        <i class="fa-solid fa-users text-blue-600"></i>
+                        <span>Customer Master Data: 3 Organizational Levels</span>
+                    </h3>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+                        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+                            <div class="font-bold text-slate-800 text-sm text-blue-600">General / Basic Data</div>
+                            <div class="text-slate-500 font-mono text-[11px]">Valid Client-Wide</div>
+                            <ul class="list-disc list-inside space-y-1 text-slate-600">
+                                <li>Name & Street Address</li>
+                                <li>Telephone / Contact Details</li>
+                                <li>Tax Registration Numbers</li>
+                                <li>Language Preferences</li>
+                            </ul>
+                        </div>
+
+                        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+                            <div class="font-bold text-slate-800 text-sm text-indigo-600">Company Code Data</div>
+                            <div class="text-slate-500 font-mono text-[11px]">Valid per Legal Entity (FI)</div>
+                            <ul class="list-disc list-inside space-y-1 text-slate-600">
+                                <li>Reconciliation Account (G/L)</li>
+                                <li>Payment Methods / Terms</li>
+                                <li>Dunning Procedures</li>
+                                <li>Withholding Tax Data</li>
+                            </ul>
+                        </div>
+
+                        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+                            <div class="font-bold text-slate-800 text-sm text-emerald-600">Sales Area Data</div>
+                            <div class="text-slate-500 font-mono text-[11px]">Valid per Sales Area (SD)</div>
+                            <ul class="list-disc list-inside space-y-1 text-slate-600">
+                                <li>Sales Office & Sales Group</li>
+                                <li>Pricing Conditions / Currencies</li>
+                                <li>Shipping Conditions</li>
+                                <li>Incoterms & Partner Functions</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Four Partner Functions Box -->
+                <div class="bg-slate-800 text-slate-200 p-6 rounded-2xl space-y-4">
+                    <h3 class="text-white font-bold text-base flex items-center space-x-2">
+                        <i class="fa-solid fa-people-arrows text-indigo-400"></i>
+                        <span>The Four Basic Mandatory Partner Roles</span>
+                    </h3>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-xs">
+                        <div class="bg-slate-900/80 p-3 rounded-lg border border-slate-700">
+                            <div class="font-bold text-blue-400 text-sm font-mono">SP (Sold-to)</div>
+                            <p class="text-slate-300 mt-1 font-semibold">Places the Order</p>
+                            <p class="text-slate-400 text-[11px] mt-1">Primary commercial entity requesting goods.</p>
+                        </div>
+                        <div class="bg-slate-900/80 p-3 rounded-lg border border-slate-700">
+                            <div class="font-bold text-emerald-400 text-sm font-mono">SH (Ship-to)</div>
+                            <p class="text-slate-300 mt-1 font-semibold">Receives Delivery</p>
+                            <p class="text-slate-400 text-[11px] mt-1">Physical address for shipping & unloading.</p>
+                        </div>
+                        <div class="bg-slate-900/80 p-3 rounded-lg border border-slate-700">
+                            <div class="font-bold text-amber-400 text-sm font-mono">BP (Bill-to)</div>
+                            <p class="text-slate-300 mt-1 font-semibold">Receives Invoice</p>
+                            <p class="text-slate-400 text-[11px] mt-1">Address for billing documentation.</p>
+                        </div>
+                        <div class="bg-slate-900/80 p-3 rounded-lg border border-slate-700">
+                            <div class="font-bold text-purple-400 text-sm font-mono">PY (Payer)</div>
+                            <p class="text-slate-300 mt-1 font-semibold">Settles Account</p>
+                            <p class="text-slate-400 text-[11px] mt-1">Financial entity paying the invoice.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 3: CHAPTER 2 - MASTER DATA CONFIG -->
+            <section id="ch2-master-data" class="space-y-6 scroll-mt-24">
+                <div class="border-b border-slate-200 pb-4">
+                    <h2 class="text-2xl font-bold text-slate-900 flex items-center space-x-3">
+                        <span class="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center text-sm font-bold">3</span>
+                        <span>Chapter 2: Master Data & Configuration Controls</span>
+                    </h2>
+                    <p class="text-slate-600 text-sm mt-1">Controlling customer behavior, material rules, and default priorities.</p>
+                </div>
+
+                <!-- Account Groups & Field Selection -->
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                    <h3 class="font-bold text-slate-800 text-base">Account Group Controls & Units of Measure</h3>
+                    <p class="text-slate-600 text-xs leading-relaxed">
+                        The <strong>Account Group</strong> controls how customer master screens behave. Fields can be set to: <span class="font-semibold text-slate-800">Suppress, Display, Optional, or Required</span>. This guarantees data quality across various partner types.
+                    </p>
+
+                    <!-- Unit of Measure Conversion Diagram -->
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-3">
+                        <div class="font-bold text-xs text-slate-700 uppercase font-mono tracking-wider">Units of Measure Hierarchy Example</div>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
+                            <div class="bg-white p-3 rounded-lg border border-slate-200 shadow-xs">
+                                <span class="px-2 py-0.5 rounded bg-slate-100 text-slate-700 font-bold font-mono text-[10px]">Base Unit</span>
+                                <div class="font-bold text-sm text-slate-800 mt-1">1 Piece</div>
+                                <p class="text-slate-500 text-[11px] mt-0.5">Fundamental unit for stock valuation & inventory balance.</p>
+                            </div>
+                            <div class="bg-white p-3 rounded-lg border border-slate-200 shadow-xs">
+                                <span class="px-2 py-0.5 rounded bg-blue-100 text-blue-800 font-bold font-mono text-[10px]">Sales Unit</span>
+                                <div class="font-bold text-sm text-blue-900 mt-1">1 Box (= 5 Pieces)</div>
+                                <p class="text-slate-500 text-[11px] mt-0.5">Proposed default unit during order entry.</p>
+                            </div>
+                            <div class="bg-white p-3 rounded-lg border border-slate-200 shadow-xs">
+                                <span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-bold font-mono text-[10px]">Delivery Unit</span>
+                                <div class="font-bold text-sm text-emerald-900 mt-1">Multiples of 30 Pcs</div>
+                                <p class="text-slate-500 text-[11px] mt-0.5">Restricts delivery creation to exact pallet/crate multiples.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Priority Source Box -->
+                <div class="p-5 rounded-2xl bg-amber-50 border border-amber-200 space-y-3">
+                    <h4 class="font-bold text-amber-950 text-sm flex items-center space-x-2">
+                        <i class="fa-solid fa-layer-group text-amber-600"></i>
+                        <span>Customer-Material Information Record & Master Data Priority</span>
+                    </h4>
+                    <p class="text-slate-700 text-xs leading-relaxed">
+                        When SAP looks for delivering plants, delivery priorities, or customer-specific material identifiers, it follows a strict 3-tier priority sequence:
+                    </p>
+                    <div class="flex flex-col md:flex-row items-center gap-2 text-xs font-semibold">
+                        <div class="bg-amber-600 text-white px-3 py-2 rounded-lg text-center w-full md:w-auto shadow-xs">
+                            1. Cust-Mat Info Record (VD51)
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-amber-400 hidden md:inline"></i>
+                        <i class="fa-solid fa-chevron-down text-amber-400 md:hidden"></i>
+                        <div class="bg-amber-500 text-white px-3 py-2 rounded-lg text-center w-full md:w-auto shadow-xs">
+                            2. Customer Master (VD01/XD01)
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-amber-400 hidden md:inline"></i>
+                        <i class="fa-solid fa-chevron-down text-amber-400 md:hidden"></i>
+                        <div class="bg-amber-400 text-amber-950 px-3 py-2 rounded-lg text-center w-full md:w-auto shadow-xs">
+                            3. Material Master (MM01)
+                        </div>
+                    </div>
+                    <p class="text-amber-900 text-[11px] italic">
+                        * Example: Customer-specific plant defaults in VD51 will always override general plant defaults in the Material Master!
+                    </p>
+                </div>
+            </section>
+
+            <!-- SECTION 4: CHAPTER 3 - SALES DOCUMENTS -->
+            <section id="ch3-sales-docs" class="space-y-6 scroll-mt-24">
+                <div class="border-b border-slate-200 pb-4">
+                    <h2 class="text-2xl font-bold text-slate-900 flex items-center space-x-3">
+                        <span class="w-8 h-8 rounded-lg bg-amber-100 text-amber-700 flex items-center justify-center text-sm font-bold">4</span>
+                        <span>Chapter 3: Sales Document Mechanics</span>
+                    </h2>
+                    <p class="text-slate-600 text-sm mt-1">Understanding the 3-level sales document architecture & determination chains.</p>
+                </div>
+
+                <!-- Three Levels Table -->
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                    <h3 class="font-bold text-slate-800 text-base">The 3 Levels of a Sales Document</h3>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+                        <!-- Header Level -->
+                        <div class="p-4 rounded-xl border border-slate-200 bg-slate-50/50 space-y-2">
+                            <div class="flex items-center justify-between">
+                                <span class="font-bold text-slate-900 text-sm">1. Header Level</span>
+                                <span class="font-mono bg-blue-100 text-blue-800 text-[10px] px-1.5 py-0.5 rounded font-bold">VBAK</span>
+                            </div>
+                            <p class="text-slate-600 text-[11px]">Valid for the whole document.</p>
+                            <div class="bg-white p-2.5 rounded border border-slate-200 font-mono text-[11px] text-slate-700 space-y-1">
+                                <div><strong>Control:</strong> Sales Doc Type (e.g. TA)</div>
+                                <div><strong>Data:</strong> Sold-to, Terms, Sales Area, Currency, Header Blocks.</div>
+                            </div>
+                        </div>
+
+                        <!-- Item Level -->
+                        <div class="p-4 rounded-xl border border-slate-200 bg-slate-50/50 space-y-2">
+                            <div class="flex items-center justify-between">
+                                <span class="font-bold text-slate-900 text-sm">2. Item Level</span>
+                                <span class="font-mono bg-emerald-100 text-emerald-800 text-[10px] px-1.5 py-0.5 rounded font-bold">VBAP</span>
+                            </div>
+                            <p class="text-slate-600 text-[11px]">Valid for individual line items.</p>
+                            <div class="bg-white p-2.5 rounded border border-slate-200 font-mono text-[11px] text-slate-700 space-y-1">
+                                <div><strong>Control:</strong> Item Category (e.g. TAN)</div>
+                                <div><strong>Data:</strong> Material, Line Qty, Pricing, Plant, Costing, Delivery Relevance.</div>
+                            </div>
+                        </div>
+
+                        <!-- Schedule Line Level -->
+                        <div class="p-4 rounded-xl border border-slate-200 bg-slate-50/50 space-y-2">
+                            <div class="flex items-center justify-between">
+                                <span class="font-bold text-slate-900 text-sm">3. Schedule Line</span>
+                                <span class="font-mono bg-amber-100 text-amber-800 text-[10px] px-1.5 py-0.5 rounded font-bold">VBEP</span>
+                            </div>
+                            <p class="text-slate-600 text-[11px]">Valid for delivery dates & splits.</p>
+                            <div class="bg-white p-2.5 rounded border border-slate-200 font-mono text-[11px] text-slate-700 space-y-1">
+                                <div><strong>Control:</strong> Schedule Line Category (CP)</div>
+                                <div><strong>Data:</strong> Confirmed Qty, Goods Issue Dates, Movement Types (601), MRP requirements.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Master Determination Chain Diagram -->
+                <div class="bg-slate-900 text-white p-6 rounded-2xl shadow-lg space-y-4">
+                    <h3 class="text-lg font-bold flex items-center space-x-2 text-blue-400">
+                        <i class="fa-solid fa-diagram-project"></i>
+                        <span>The Master Determination Chain</span>
+                    </h3>
+                    <p class="text-slate-300 text-xs">
+                        How SAP automatically figures out what each order line item does and how logistics will handle fulfillment:
+                    </p>
+
+                    <div class="bg-slate-800/90 p-4 rounded-xl border border-slate-700 space-y-4 font-mono text-xs">
+                        <!-- Step 1 -->
+                        <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-2 p-2 bg-slate-900 rounded border border-slate-700">
+                            <span class="text-slate-400">1. Inputs:</span>
+                            <div class="flex flex-wrap gap-1 text-[11px]">
+                                <span class="bg-blue-900/60 text-blue-300 px-2 py-0.5 rounded">Doc Type (OR)</span> +
+                                <span class="bg-indigo-900/60 text-indigo-300 px-2 py-0.5 rounded">Item Cat Group (NORM)</span> +
+                                <span class="bg-purple-900/60 text-purple-300 px-2 py-0.5 rounded">Item Usage</span>
+                            </div>
+                        </div>
+
+                        <div class="text-center text-blue-400"><i class="fa-solid fa-arrow-down"></i></div>
+
+                        <!-- Step 2 -->
+                        <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-2 p-2 bg-slate-900 rounded border border-emerald-800">
+                            <span class="text-emerald-400 font-bold">2. Determines Item Category:</span>
+                            <span class="bg-emerald-950 text-emerald-300 px-3 py-1 rounded text-sm font-bold border border-emerald-700">TAN (Standard Item)</span>
+                        </div>
+
+                        <div class="text-center text-blue-400"><i class="fa-solid fa-arrow-down"></i></div>
+
+                        <!-- Step 3 -->
+                        <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-2 p-2 bg-slate-900 rounded border border-amber-800">
+                            <span class="text-amber-400 font-bold">3. Item Category (TAN) + MRP Type (PD):</span>
+                            <span class="bg-amber-950 text-amber-300 px-3 py-1 rounded text-sm font-bold border border-amber-700">CP (MRP Schedule Line)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Copy Control Table Box -->
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-3">
+                    <h3 class="font-bold text-slate-800 text-base">Copy Control Configuration T-Codes</h3>
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-3 font-mono text-xs">
+                        <div class="p-2.5 bg-slate-50 border rounded-lg"><span class="text-blue-600 font-bold">VTAA:</span> Sales Doc to Sales Doc</div>
+                        <div class="p-2.5 bg-slate-50 border rounded-lg"><span class="text-blue-600 font-bold">VTLA:</span> Sales Doc to Delivery</div>
+                        <div class="p-2.5 bg-slate-50 border rounded-lg"><span class="text-blue-600 font-bold">VTFA:</span> Sales Doc to Billing</div>
+                        <div class="p-2.5 bg-slate-50 border rounded-lg"><span class="text-blue-600 font-bold">VTFL:</span> Delivery to Billing</div>
+                        <div class="p-2.5 bg-slate-50 border rounded-lg"><span class="text-blue-600 font-bold">VTAF:</span> Billing to Sales Doc</div>
+                        <div class="p-2.5 bg-slate-50 border rounded-lg"><span class="text-blue-600 font-bold">VTFF:</span> Billing to Billing</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 5: AVAILABLE-TO-PROMISE (ATP) DEEP DIVE -->
+            <section id="atp-deep-dive" class="space-y-6 scroll-mt-24">
+                <div class="border-b border-slate-200 pb-4">
+                    <h2 class="text-2xl font-bold text-slate-900 flex items-center space-x-3">
+                        <span class="w-8 h-8 rounded-lg bg-teal-100 text-teal-700 flex items-center justify-center text-sm font-bold">5</span>
+                        <span>Available-to-Promise (ATP) Mechanics</span>
+                    </h2>
+                    <p class="text-slate-600 text-sm mt-1">Understanding fulfillment feasibility, scheduling logic, and cumulative availability checks.</p>
+                </div>
+
+                <!-- What is ATP Hero Card -->
+                <div class="p-6 rounded-2xl bg-gradient-to-r from-teal-900 via-slate-900 to-indigo-950 text-white shadow-xl space-y-4">
+                    <div class="flex items-center space-x-2 text-teal-400 font-mono text-xs uppercase font-bold tracking-wider">
+                        <i class="fa-solid fa-truck-fast"></i>
+                        <span>Core SD Fulfillment Question</span>
+                    </div>
+                    <h3 class="text-xl md:text-2xl font-extrabold">"Can we fulfill this order? If yes, how much can we deliver and when?"</h3>
+                    <p class="text-slate-300 text-xs md:text-sm leading-relaxed">
+                        When a sales order is entered, SAP instantly executes an ATP check against available stock, incoming purchase orders, production receipts, and existing customer commitments to calculate accurate delivery promises.
+                    </p>
+                </div>
+
+                <!-- ATP Check Flow & Level Check Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Check Flow -->
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                        <h3 class="font-bold text-slate-800 text-base flex items-center space-x-2">
+                            <i class="fa-solid fa-arrows-split-up-and-left text-teal-600"></i>
+                            <span>The 4-Step ATP Order Flow</span>
+                        </h3>
+                        <div class="space-y-2.5 text-xs">
+                            <div class="flex items-start space-x-3 p-2.5 rounded-lg bg-slate-50 border border-slate-100">
+                                <span class="w-5 h-5 rounded-full bg-teal-600 text-white flex items-center justify-center font-bold text-[10px] shrink-0">1</span>
+                                <div><strong class="text-slate-800">Requested Date & Qty:</strong> Customer specifies desired delivery date and quantity.</div>
+                            </div>
+                            <div class="flex items-start space-x-3 p-2.5 rounded-lg bg-slate-50 border border-slate-100">
+                                <span class="w-5 h-5 rounded-full bg-teal-600 text-white flex items-center justify-center font-bold text-[10px] shrink-0">2</span>
+                                <div><strong class="text-slate-800">Backward Scheduling:</strong> System computes required Material Availability Date.</div>
+                            </div>
+                            <div class="flex items-start space-x-3 p-2.5 rounded-lg bg-slate-50 border border-slate-100">
+                                <span class="w-5 h-5 rounded-full bg-teal-600 text-white flex items-center justify-center font-bold text-[10px] shrink-0">3</span>
+                                <div><strong class="text-slate-800">Stock & Receipts Check:</strong> Evaluates stock balances and scheduled stock receipts.</div>
+                            </div>
+                            <div class="flex items-start space-x-3 p-2.5 rounded-lg bg-slate-50 border border-slate-100">
+                                <span class="w-5 h-5 rounded-full bg-teal-600 text-white flex items-center justify-center font-bold text-[10px] shrink-0">4</span>
+                                <div><strong class="text-slate-800">System Confirmation:</strong> Proposes Full Confirmation, Partial Split, or Proposed Future Date.</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Level of ATP Check -->
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                        <h3 class="font-bold text-slate-800 text-base flex items-center space-x-2">
+                            <i class="fa-solid fa-layer-group text-indigo-600"></i>
+                            <span>Levels of ATP Check</span>
+                        </h3>
+                        <p class="text-slate-600 text-xs">
+                            ATP checks can be executed at the <strong>Plant Level</strong> (combining all storage locations) or restricted to a specific <strong>Storage Location Level</strong> based on customizing.
+                        </p>
+                        
+                        <div class="bg-slate-900 text-white p-4 rounded-xl space-y-3 font-mono text-xs">
+                            <div class="flex justify-between items-center text-slate-400 border-b border-slate-800 pb-2">
+                                <span>Plant 1010 Total Stock</span>
+                                <span class="text-emerald-400 font-bold">150 Pcs</span>
+                            </div>
+                            <div class="grid grid-cols-2 gap-2 text-center">
+                                <div class="bg-slate-800 p-2 rounded border border-slate-700">
+                                    <div class="text-slate-400 text-[10px]">SLoc A</div>
+                                    <div class="text-amber-400 font-bold text-sm">50 Pcs</div>
+                                </div>
+                                <div class="bg-slate-800 p-2 rounded border border-slate-700">
+                                    <div class="text-slate-400 text-[10px]">SLoc B</div>
+                                    <div class="text-amber-400 font-bold text-sm">100 Pcs</div>
+                                </div>
+                            </div>
+                            <p class="text-[11px] text-slate-400 font-sans italic">
+                                * If check is set to SLoc A, an order for 70 Pcs will fail even though Plant 1010 has 150 Pcs!
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Material Availability Date & Backward vs Forward Scheduling -->
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-6">
+                    <div>
+                        <h3 class="font-bold text-slate-800 text-base flex items-center space-x-2">
+                            <i class="fa-solid fa-clock text-blue-600"></i>
+                            <span>Material Availability Date & Delivery Scheduling</span>
+                        </h3>
+                        <p class="text-slate-600 text-xs mt-1">
+                            SAP checks ATP against the calculated <strong>Material Availability Date</strong> rather than the requested delivery date.
+                        </p>
+                    </div>
+
+                    <!-- Scheduling Timeline Diagram -->
+                    <div class="bg-slate-50 p-5 rounded-xl border border-slate-200 space-y-4">
+                        <div class="font-bold text-xs text-slate-700 uppercase font-mono tracking-wider">Backward Scheduling Sequence</div>
+                        
+                        <div class="flex flex-col md:flex-row items-center justify-between gap-2 text-xs">
+                            <div class="w-full text-center p-3 rounded-lg bg-emerald-100 text-emerald-900 border border-emerald-200">
+                                <div class="font-bold">Requested Delivery Date</div>
+                                <div class="text-[11px] text-emerald-700 font-mono mt-0.5">e.g. July 20</div>
+                            </div>
+                            <i class="fa-solid fa-arrow-left text-slate-400 hidden md:inline"></i>
+                            <i class="fa-solid fa-arrow-down text-slate-400 md:hidden"></i>
+
+                            <div class="w-full text-center p-3 rounded-lg bg-blue-100 text-blue-900 border border-blue-200">
+                                <div class="font-bold">Transportation Lead Time</div>
+                                <div class="text-[11px] text-blue-700 font-mono mt-0.5">Transit Duration</div>
+                            </div>
+                            <i class="fa-solid fa-arrow-left text-slate-400 hidden md:inline"></i>
+                            <i class="fa-solid fa-arrow-down text-slate-400 md:hidden"></i>
+
+                            <div class="w-full text-center p-3 rounded-lg bg-indigo-100 text-indigo-900 border border-indigo-200">
+                                <div class="font-bold">Picking & Packing</div>
+                                <div class="text-[11px] text-indigo-700 font-mono mt-0.5">Warehouse Handling</div>
+                            </div>
+                            <i class="fa-solid fa-arrow-left text-slate-400 hidden md:inline"></i>
+                            <i class="fa-solid fa-arrow-down text-slate-400 md:hidden"></i>
+
+                            <div class="w-full text-center p-3 rounded-lg bg-purple-600 text-white font-bold shadow-md">
+                                <div>Material Availability Date</div>
+                                <div class="text-[11px] text-purple-200 font-mono mt-0.5">Check Date (July 17)</div>
+                            </div>
+                        </div>
+
+                        <!-- Forward Scheduling Callout -->
+                        <div class="mt-4 p-4 rounded-xl bg-amber-50 border border-amber-200 text-xs space-y-1">
+                            <div class="font-bold text-amber-950 flex items-center space-x-2">
+                                <i class="fa-solid fa-forward text-amber-600"></i>
+                                <span>Forward Scheduling Trigger</span>
+                            </div>
+                            <p class="text-slate-700">
+                                If stock is unavailable on the calculated Material Availability Date (e.g. July 17), SAP switches to <strong>Forward Scheduling</strong>. It finds the next earliest date stock will be available (or uses <strong>Replenishment Lead Time</strong>) and calculates a new proposed delivery date for the customer.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cumulative ATP Quantity & First Come, First Served -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Cumulative Formula -->
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                        <h3 class="font-bold text-slate-800 text-base flex items-center space-x-2">
+                            <i class="fa-solid fa-calculator text-emerald-600"></i>
+                            <span>Cumulative ATP Quantity Formula</span>
+                        </h3>
+                        <p class="text-slate-600 text-xs">
+                            ATP does not merely check current warehouse stock. It computes future availability dynamically:
+                        </p>
+
+                        <div class="bg-slate-900 text-slate-100 p-4 rounded-xl font-mono text-xs space-y-2 border border-slate-800">
+                            <div class="flex justify-between text-emerald-400">
+                                <span>Current Physical Stock</span>
+                                <span>+ 80</span>
+                            </div>
+                            <div class="flex justify-between text-blue-400">
+                                <span>Incoming Purchase Orders / Planned Receipts</span>
+                                <span>+ 60</span>
+                            </div>
+                            <div class="flex justify-between text-red-400 border-b border-slate-800 pb-2">
+                                <span>Existing Confirmed Sales Orders</span>
+                                <span>- 0</span>
+                            </div>
+                            <div class="flex justify-between font-bold text-sm text-yellow-400 pt-1">
+                                <span>Cumulative ATP Quantity</span>
+                                <span>= 140 Units</span>
+                            </div>
+                        </div>
+                        <p class="text-xs text-slate-500">
+                            When a new order for 70 units is placed, it is <strong>confirmed</strong>, and the remaining Cumulative ATP quantity reduces to 70 units for future checks.
+                        </p>
+                    </div>
+
+                    <!-- First-Come, First-Served & Delivery Agreements -->
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                        <h3 class="font-bold text-slate-800 text-base flex items-center space-x-2">
+                            <i class="fa-solid fa-ranking-star text-amber-600"></i>
+                            <span>First-Come First-Served & Delivery Agreements</span>
+                        </h3>
+                        
+                        <div class="space-y-3 text-xs">
+                            <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 space-y-1">
+                                <div class="font-bold text-slate-800">First-Come, First-Served Reservation</div>
+                                <p class="text-slate-600">Order A reserves 70 units. Subsequent Order B (requesting 100 units) will only find 70 units available, forcing partial confirmation or forward delivery proposal.</p>
+                            </div>
+
+                            <div class="grid grid-cols-2 gap-2">
+                                <div class="p-3 bg-blue-50/50 rounded-xl border border-blue-100 space-y-1">
+                                    <div class="font-bold text-blue-900">Complete Delivery</div>
+                                    <p class="text-slate-600 text-[11px]">All line items must be confirmed together. If Item B is delayed, Item A is held until both are ready.</p>
+                                </div>
+                                <div class="p-3 bg-teal-50/50 rounded-xl border border-teal-100 space-y-1">
+                                    <div class="font-bold text-teal-900">Partial Delivery</div>
+                                    <p class="text-slate-600 text-[11px]">Partial quantities are shipped as soon as available, with remaining split into backorders.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- aATP (Advanced ATP) & ATP vs MRP -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Advanced ATP (aATP) -->
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                        <div class="flex items-center space-x-2">
+                            <span class="px-2.5 py-0.5 rounded-full bg-indigo-100 text-indigo-800 text-xs font-bold font-mono">S/4HANA</span>
+                            <h3 class="font-bold text-slate-800 text-base">aATP & Alternative-Based Confirmation (ABC)</h3>
+                        </div>
+                        <p class="text-slate-600 text-xs">
+                            In SAP S/4HANA, <strong>Advanced ATP (aATP)</strong> introduces intelligent automated substitution logic:
+                        </p>
+
+                        <!-- Plant Substitution Diagram -->
+                        <div class="bg-slate-900 text-white p-4 rounded-xl space-y-3 text-xs font-mono">
+                            <div class="text-slate-400 text-[11px]">ABC Automatic Substitution Hierarchy:</div>
+                            <div class="flex items-center justify-between p-2 bg-slate-800 rounded border border-red-900/60">
+                                <span>Requested: Plant 1010</span>
+                                <span class="text-red-400 font-bold">Out of Stock</span>
+                            </div>
+                            <div class="text-center text-teal-400 text-xs"><i class="fa-solid fa-arrow-down"></i> Auto-Check Alternative</div>
+                            <div class="flex items-center justify-between p-2 bg-slate-800 rounded border border-emerald-900/60">
+                                <span>Alternate: Plant 1020</span>
+                                <span class="text-emerald-400 font-bold">Confirmed Stock ✅</span>
+                            </div>
+                        </div>
+                        <p class="text-slate-500 text-[11px]">
+                            aATP automatically checks alternative plants, storage locations, or substitute materials before rejecting an order date.
+                        </p>
+                    </div>
+
+                    <!-- ATP vs MRP Comparison -->
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                        <h3 class="font-bold text-slate-800 text-base flex items-center space-x-2">
+                            <i class="fa-solid fa-scale-balanced text-violet-600"></i>
+                            <span>ATP vs. MRP: Classic Interview Question</span>
+                        </h3>
+                        
+                        <div class="space-y-3 text-xs">
+                            <div class="p-3 rounded-xl bg-violet-50 border border-violet-200 space-y-1">
+                                <div class="font-bold text-violet-950 text-sm">ATP (Available-to-Promise)</div>
+                                <div class="font-semibold text-violet-800">Answers: "Can I promise this order to the customer right now?"</div>
+                                <p class="text-slate-600 text-[11px]">Validates immediate sales feasibility without triggering supply creation.</p>
+                            </div>
+
+                            <div class="p-3 rounded-xl bg-indigo-50 border border-indigo-200 space-y-1">
+                                <div class="font-bold text-indigo-950 text-sm">MRP (Material Requirements Planning)</div>
+                                <div class="font-semibold text-indigo-800">Answers: "How do I procure or produce the missing stock?"</div>
+                                <p class="text-slate-600 text-[11px]">When ATP identifies a shortage, MRP generates Purchase Requisitions or Planned/Production Orders to replenish stock.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Exam & Project Takeaways Callout -->
+                <div class="bg-slate-900 text-white p-6 rounded-2xl shadow-xl space-y-4">
+                    <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+                        <h3 class="text-base font-bold text-yellow-400 flex items-center space-x-2">
+                            <i class="fa-solid fa-key"></i>
+                            <span>Top 5 Certification & Project Takeaways for ATP</span>
+                        </h3>
+                        <span class="text-xs font-mono bg-yellow-400/20 text-yellow-300 px-2.5 py-1 rounded-full font-bold">Must Know</span>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs font-sans">
+                        <div class="flex items-start space-x-2 bg-slate-800/80 p-3 rounded-xl border border-slate-700">
+                            <i class="fa-solid fa-check text-emerald-400 mt-0.5"></i>
+                            <span><strong>Material Availability Date:</strong> ATP checks availability against the calculated material availability date, NOT the requested delivery date directly.</span>
+                        </div>
+                        <div class="flex items-start space-x-2 bg-slate-800/80 p-3 rounded-xl border border-slate-700">
+                            <i class="fa-solid fa-check text-emerald-400 mt-0.5"></i>
+                            <span><strong>Forward Scheduling:</strong> If stock is unavailable during backward scheduling, SAP triggers forward scheduling to propose realistic dates.</span>
+                        </div>
+                        <div class="flex items-start space-x-2 bg-slate-800/80 p-3 rounded-xl border border-slate-700">
+                            <i class="fa-solid fa-check text-emerald-400 mt-0.5"></i>
+                            <span><strong>Cumulative ATP Quantity:</strong> Considers physical stock + planned receipts - commitments to determine promise quantity.</span>
+                        </div>
+                        <div class="flex items-start space-x-2 bg-slate-800/80 p-3 rounded-xl border border-slate-700">
+                            <i class="fa-solid fa-check text-emerald-400 mt-0.5"></i>
+                            <span><strong>Replenishment Lead Time (RLT):</strong> If stock is absent, SAP can confirm stock at the end of the material's procurement lead time.</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 6: INTERACTIVE DETERMINATION Visualizer SIMULATOR -->
+            <section id="determination-tool" class="space-y-6 scroll-mt-24">
+                <div class="border-b border-slate-200 pb-4">
+                    <h2 class="text-2xl font-bold text-slate-900 flex items-center space-x-3">
+                        <span class="w-8 h-8 rounded-lg bg-pink-100 text-pink-700 flex items-center justify-center text-sm font-bold">6</span>
+                        <span>Interactive SD Determination Simulator</span>
+                    </h2>
+                    <p class="text-slate-600 text-sm mt-1">Test how SAP determines Item Categories and Schedule Line Categories based on inputs.</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-lg space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+                        <!-- Dropdown 1 -->
+                        <div>
+                            <label class="block font-bold text-slate-700 mb-1">Sales Document Type</label>
+                            <select id="simDocType" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2.5 text-slate-800 font-semibold focus:ring-2 focus:ring-blue-500">
+                                <option value="OR">OR / TA - Standard Order</option>
+                                <option value="QT">QT / AG - Quotation</option>
+                                <option value="RE">RE - Returns Order</option>
+                                <option value="BV">BV / CS - Cash Sale</option>
+                            </select>
+                        </div>
+
+                        <!-- Dropdown 2 -->
+                        <div>
+                            <label class="block font-bold text-slate-700 mb-1">Item Category Group (Material)</label>
+                            <select id="simItemGrp" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2.5 text-slate-800 font-semibold focus:ring-2 focus:ring-blue-500">
+                                <option value="NORM">NORM - Standard Stock Item</option>
+                                <option value="TEXT">TEXT - Text Item</option>
+                                <option value="BAP">BANS - Third Party Item</option>
+                                <option value="DIEN">DIEN - Service Item</option>
+                            </select>
+                        </div>
+
+                        <!-- Dropdown 3 -->
+                        <div>
+                            <label class="block font-bold text-slate-700 mb-1">MRP Type (Material)</label>
+                            <select id="simMrpType" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2.5 text-slate-800 font-semibold focus:ring-2 focus:ring-blue-500">
+                                <option value="PD">PD - MRP Planning Active</option>
+                                <option value="ND">ND - No MRP Planning</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Output Card -->
+                    <div class="p-6 rounded-xl bg-slate-900 text-white space-y-4">
+                        <div class="text-xs font-mono text-pink-400 font-bold uppercase tracking-wider">Simulation Output Results</div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="p-4 bg-slate-800 rounded-lg border border-slate-700 space-y-1">
+                                <div class="text-xs text-slate-400">Determined Item Category</div>
+                                <div id="resItemCat" class="text-2xl font-extrabold text-emerald-400 font-mono">TAN</div>
+                                <div id="resItemDesc" class="text-xs text-slate-300">Standard item, priced, delivery-relevant, schedule lines allowed.</div>
+                            </div>
+
+                            <div class="p-4 bg-slate-800 rounded-lg border border-slate-700 space-y-1">
+                                <div class="text-xs text-slate-400">Determined Schedule Line Category</div>
+                                <div id="resSchedCat" class="text-2xl font-extrabold text-amber-400 font-mono">CP</div>
+                                <div id="resSchedDesc" class="text-xs text-slate-300">MRP requirements active, availability check active, movement type 601.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 6: WORKED SCENARIO - NORTHSTAR COMPONENTS -->
+            <section id="northstar-scenario" class="space-y-6 scroll-mt-24">
+                <div class="border-b border-slate-200 pb-4">
+                    <h2 class="text-2xl font-bold text-slate-900 flex items-center space-x-3">
+                        <span class="w-8 h-8 rounded-lg bg-cyan-100 text-cyan-700 flex items-center justify-center text-sm font-bold">6</span>
+                        <span>Complete Worked Scenario: Northstar Components</span>
+                    </h2>
+                    <p class="text-slate-600 text-sm mt-1">Connecting Chapters 1, 2, and 3 through a comprehensive end-to-end business story.</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-6">
+                    <!-- Scenario Specs -->
+                    <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+                        <div>
+                            <span class="font-bold text-slate-700">Selling Entity:</span>
+                            <div class="font-mono text-slate-900 mt-0.5">Northstar Components (Sales Org NS01)</div>
+                        </div>
+                        <div>
+                            <span class="font-bold text-slate-700">Customer:</span>
+                            <div class="font-mono text-slate-900 mt-0.5">Metro Machines (Sold-to / Ship-to)</div>
+                        </div>
+                        <div>
+                            <span class="font-bold text-slate-700">Sales Area:</span>
+                            <div class="font-mono text-blue-700 font-bold mt-0.5">NS01 / 10 (Wholesale) / 01 (Spare Parts)</div>
+                        </div>
+                    </div>
+
+                    <!-- Step Timeline -->
+                    <div class="space-y-4 text-xs">
+                        <!-- Step 1 -->
+                        <div class="flex items-start space-x-3 p-3 rounded-lg bg-slate-50 border border-slate-100">
+                            <span class="w-6 h-6 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">1</span>
+                            <div>
+                                <h4 class="font-bold text-slate-800 text-sm">Step 1: Org & Context Determination</h4>
+                                <p class="text-slate-600 mt-0.5">Order entered in Sales Area <strong>NS01/10/01</strong>. System determines delivering Plant <strong>NS01</strong> and express Shipping Point <strong>EX01</strong> based on customer shipping conditions.</p>
+                            </div>
+                        </div>
+
+                        <!-- Step 2 -->
+                        <div class="flex items-start space-x-3 p-3 rounded-lg bg-slate-50 border border-slate-100">
+                            <span class="w-6 h-6 rounded-full bg-indigo-600 text-white flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">2</span>
+                            <div>
+                                <h4 class="font-bold text-slate-800 text-sm">Step 2: Master Data & Overrides</h4>
+                                <p class="text-slate-600 mt-0.5">Internal Material <strong>NS-100</strong> (stocked in Pcs, sold in Boxes of 20). Customer Info-Record maps customer code <strong>MM-CON-77</strong> and overrides general description automatically.</p>
+                            </div>
+                        </div>
+
+                        <!-- Step 3 -->
+                        <div class="flex items-start space-x-3 p-3 rounded-lg bg-slate-50 border border-slate-100">
+                            <span class="w-6 h-6 rounded-full bg-emerald-600 text-white flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">3</span>
+                            <div>
+                                <h4 class="font-bold text-slate-800 text-sm">Step 3: Document & Schedule Line Execution</h4>
+                                <p class="text-slate-600 mt-0.5">Standard Order <strong>TA</strong> determines Item Category <strong>TAN</strong> and Schedule Line Category <strong>CP</strong>. ATP availability check confirms 60 boxes for immediate delivery and 40 boxes for next week.</p>
+                            </div>
+                        </div>
+
+                        <!-- Step 4 -->
+                        <div class="flex items-start space-x-3 p-3 rounded-lg bg-slate-50 border border-slate-100">
+                            <span class="w-6 h-6 rounded-full bg-amber-600 text-white flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">4</span>
+                            <div>
+                                <h4 class="font-bold text-slate-800 text-sm">Step 4: Fulfillment, Goods Issue & Invoicing</h4>
+                                <p class="text-slate-600 mt-0.5">Copy Control creates Outbound Delivery <strong>LF</strong>. Picking occurs at EX01, followed by Goods Issue (mvt 601). Billing <strong>F2</strong> updates accounting revenue & receivables automatically.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 7: TECHNICAL TABLES REFERENCE EXPLORER -->
+            <section id="table-reference" class="space-y-6 scroll-mt-24">
+                <div class="border-b border-slate-200 pb-4">
+                    <h2 class="text-2xl font-bold text-slate-900 flex items-center space-x-3">
+                        <span class="w-8 h-8 rounded-lg bg-violet-100 text-violet-700 flex items-center justify-center text-sm font-bold">7</span>
+                        <span>Technical SAP SD Database Table Reference</span>
+                    </h2>
+                    <p class="text-slate-600 text-sm mt-1">Frequently queried tables in Data Browser (SE16/SE16N).</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                    <div class="relative">
+                        <i class="fa-solid fa-magnifying-glass absolute left-3 top-3 text-slate-400"></i>
+                        <input id="tableSearchInput" type="text" placeholder="Search table name or description (e.g. VBAK, Header, Status)..." class="w-full pl-9 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse text-xs">
+                            <thead>
+                                <tr class="bg-slate-100 border-b border-slate-200 text-slate-700">
+                                    <th class="p-3 font-mono font-bold">Table Name</th>
+                                    <th class="p-3 font-semibold">Technical Description</th>
+                                    <th class="p-3 font-semibold">Functional Scope</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tableReferenceBody" class="divide-y divide-slate-100 text-slate-600 font-mono">
+                                <tr class="hover:bg-slate-50">
+                                    <td class="p-3 font-bold text-blue-600">VBAK</td>
+                                    <td class="p-3 font-sans">Sales Document: Header Data</td>
+                                    <td class="p-3 font-sans text-slate-500">Sales Org, Doc Type, Customer, Value</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50">
+                                    <td class="p-3 font-bold text-blue-600">VBAP</td>
+                                    <td class="p-3 font-sans">Sales Document: Item Data</td>
+                                    <td class="p-3 font-sans text-slate-500">Material, Item Category, Quantities, Plant</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50">
+                                    <td class="p-3 font-bold text-blue-600">VBEP</td>
+                                    <td class="p-3 font-sans">Sales Document: Schedule Line Data</td>
+                                    <td class="p-3 font-sans text-slate-500">Delivery Dates, Confirmed Quantities</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50">
+                                    <td class="p-3 font-bold text-blue-600">VBPA</td>
+                                    <td class="p-3 font-sans">Sales Document: Partner Functions</td>
+                                    <td class="p-3 font-sans text-slate-500">Sold-to, Ship-to, Bill-to, Payer assignments</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50">
+                                    <td class="p-3 font-bold text-blue-600">LIKP</td>
+                                    <td class="p-3 font-sans">SD Document: Delivery Header Data</td>
+                                    <td class="p-3 font-sans text-slate-500">Shipping Point, Route, Delivery Dates</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50">
+                                    <td class="p-3 font-bold text-blue-600">LIPS</td>
+                                    <td class="p-3 font-sans">SD Document: Delivery Item Data</td>
+                                    <td class="p-3 font-sans text-slate-500">Picked Qty, Batch Number, Storage Location</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50">
+                                    <td class="p-3 font-bold text-blue-600">VBRK</td>
+                                    <td class="p-3 font-sans">Billing Document: Header Data</td>
+                                    <td class="p-3 font-sans text-slate-500">Payer, Billing Date, Net Value, Tax</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50">
+                                    <td class="p-3 font-bold text-blue-600">VBRP</td>
+                                    <td class="p-3 font-sans">Billing Document: Item Data</td>
+                                    <td class="p-3 font-sans text-slate-500">Billed Material, Invoiced Quantities</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50">
+                                    <td class="p-3 font-bold text-blue-600">VBFA</td>
+                                    <td class="p-3 font-sans">Sales Document Flow</td>
+                                    <td class="p-3 font-sans text-slate-500">Links Predecessor and Successor Docs</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 8: PRACTICE QUIZ / FLASHCARDS -->
+            <section id="practice-quiz" class="space-y-6 scroll-mt-24 pb-16">
+                <div class="border-b border-slate-200 pb-4">
+                    <h2 class="text-2xl font-bold text-slate-900 flex items-center space-x-3">
+                        <span class="w-8 h-8 rounded-lg bg-yellow-100 text-yellow-700 flex items-center justify-center text-sm font-bold">8</span>
+                        <span>Practice Test & Flashcard Checkpoint</span>
+                    </h2>
+                    <p class="text-slate-600 text-sm mt-1">Verify your mastery of key concepts with instant answer reveals.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+                    <!-- Q1 -->
+                    <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-3">
+                        <div class="font-bold text-slate-900 text-sm">Q1. Why is a Sales Area a combination rather than a single unit?</div>
+                        <p class="text-slate-600">Why combine Sales Org, Distribution Channel, and Division?</p>
+                        <button onclick="toggleAnswer('ans1')" class="text-blue-600 font-semibold text-xs hover:underline flex items-center space-x-1">
+                            <span>Show Solution</span>
+                            <i class="fa-solid fa-chevron-down text-[10px]"></i>
+                        </button>
+                        <div id="ans1" class="hidden p-3 bg-slate-50 rounded-lg text-slate-700 border border-slate-200">
+                            <strong>Answer:</strong> It allows a customer to have different prices, payment terms, shipping conditions, and sales offices depending on the route to market and product line.
+                        </div>
+                    </div>
+
+                    <!-- Q2 -->
+                    <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-3">
+                        <div class="font-bold text-slate-900 text-sm">Q2. Base vs. Sales vs. Delivery Units</div>
+                        <p class="text-slate-600">Stocked in pcs, sold in boxes of 5, delivered in multiples of 10. Identify each.</p>
+                        <button onclick="toggleAnswer('ans2')" class="text-blue-600 font-semibold text-xs hover:underline flex items-center space-x-1">
+                            <span>Show Solution</span>
+                            <i class="fa-solid fa-chevron-down text-[10px]"></i>
+                        </button>
+                        <div id="ans2" class="hidden p-3 bg-slate-50 rounded-lg text-slate-700 border border-slate-200">
+                            <strong>Answer:</strong> Base Unit = Piece; Sales Unit = Box (1 box = 5 pcs); Delivery Unit = 10 pcs (or 2 boxes).
+                        </div>
+                    </div>
+
+                    <!-- Q3 -->
+                    <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-3">
+                        <div class="font-bold text-slate-900 text-sm">Q3. Which object controls line pricing & delivery relevance?</div>
+                        <p class="text-slate-600">Does the Header Doc Type or Item Category control line behavior?</p>
+                        <button onclick="toggleAnswer('ans3')" class="text-blue-600 font-semibold text-xs hover:underline flex items-center space-x-1">
+                            <span>Show Solution</span>
+                            <i class="fa-solid fa-chevron-down text-[10px]"></i>
+                        </button>
+                        <div id="ans3" class="hidden p-3 bg-slate-50 rounded-lg text-slate-700 border border-slate-200">
+                            <strong>Answer:</strong> The <strong>Item Category</strong> (e.g., TAN) controls pricing and delivery relevance for line items.
+                        </div>
+                    </div>
+
+                    <!-- Q4 -->
+                    <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-3">
+                        <div class="font-bold text-slate-900 text-sm">Q4. Plant vs. Shipping Point</div>
+                        <p class="text-slate-600">Why are they distinct organizational entities?</p>
+                        <button onclick="toggleAnswer('ans4')" class="text-blue-600 font-semibold text-xs hover:underline flex items-center space-x-1">
+                            <span>Show Solution</span>
+                            <i class="fa-solid fa-chevron-down text-[10px]"></i>
+                        </button>
+                        <div id="ans4" class="hidden p-3 bg-slate-50 rounded-lg text-slate-700 border border-slate-200">
+                            <strong>Answer:</strong> A plant is a location for stock valuation and MRP checks. A shipping point is the physical loading spot for deliveries; one plant can have multiple shipping points (e.g. Express vs Standard).
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- SCRIPTS -->
+    <script>
+        // Toggle mobile navigation menu
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const sidebar = document.getElementById('sidebar');
+        const mobileOverlay = document.getElementById('mobileOverlay');
+
+        function toggleMenu() {
+            sidebar.classList.toggle('-translate-x-full');
+            mobileOverlay.classList.toggle('hidden');
+        }
+
+        mobileMenuBtn.addEventListener('click', toggleMenu);
+        mobileOverlay.addEventListener('click', toggleMenu);
+
+        // Update Reading Progress Bar
+        window.addEventListener('scroll', () => {
+            const winScroll = document.documentElement.scrollTop || document.body.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            const bar = document.getElementById('progressBar');
+            const txt = document.getElementById('progressText');
+            if(bar) bar.style.width = scrolled + '%';
+            if(txt) txt.innerText = Math.round(scrolled) + '%';
+        });
+
+        // Toggle Quiz Answers
+        function toggleAnswer(id) {
+            const el = document.getElementById(id);
+            if (el) {
+                el.classList.toggle('hidden');
+            }
+        }
+
+        // SD Determination Simulator Logic
+        const simDocType = document.getElementById('simDocType');
+        const simItemGrp = document.getElementById('simItemGrp');
+        const simMrpType = document.getElementById('simMrpType');
+
+        const resItemCat = document.getElementById('resItemCat');
+        const resItemDesc = document.getElementById('resItemDesc');
+        const resSchedCat = document.getElementById('resSchedCat');
+        const resSchedDesc = document.getElementById('resSchedDesc');
+
+        function updateSimulation() {
+            const doc = simDocType.value;
+            const grp = simItemGrp.value;
+            const mrp = simMrpType.value;
+
+            let itemCat = 'TAN';
+            let itemDesc = 'Standard item: priced, delivery-relevant, schedule lines allowed.';
+            let schedCat = 'CP';
+            let schedDesc = 'MRP requirements active, availability check active, movement type 601.';
+
+            // Item Category Determination Logic
+            if (grp === 'TEXT') {
+                itemCat = 'TATX';
+                itemDesc = 'Text item: non-priced, non-deliverable, no schedule lines.';
+                schedCat = 'N/A';
+                schedDesc = 'No schedule lines permitted for text items.';
+            } else if (grp === 'BAP') {
+                itemCat = 'TAS';
+                itemDesc = 'Third-party item: triggers automatic Purchase Requisition.';
+                schedCat = 'CS';
+                schedDesc = 'Third-party schedule line: creates PR, no inventory movement.';
+            } else if (grp === 'DIEN') {
+                itemCat = 'TAD';
+                itemDesc = 'Service item: priced, non-deliverable (order-related billing).';
+                schedCat = 'N/A';
+                schedDesc = 'No inventory movement for services.';
+            } else if (doc === 'QT') {
+                itemCat = 'AGN';
+                itemDesc = 'Quotation item: non-deliverable quotation line.';
+                schedCat = 'DG';
+                schedDesc = 'Quotation schedule line: non-inventory active.';
+            } else if (doc === 'RE') {
+                itemCat = 'REN';
+                itemDesc = 'Returns item: returns processing active, credit active.';
+                schedCat = 'DN';
+                schedDesc = 'Returns schedule line: receipt movement type 651.';
+            } else if (doc === 'BV') {
+                itemCat = 'BVNN';
+                itemDesc = 'Cash sale item: immediate delivery & invoice generation.';
+                schedCat = 'CP';
+                schedDesc = 'Standard schedule line with immediate goods movement.';
+            }
+
+            // Adjust for MRP ND if applicable
+            if (mrp === 'ND' && itemCat === 'TAN') {
+                schedCat = 'C0';
+                schedDesc = 'No MRP requirements planning, availability check only.';
+            }
+
+            resItemCat.innerText = itemCat;
+            resItemDesc.innerText = itemDesc;
+            resSchedCat.innerText = schedCat;
+            resSchedDesc.innerText = schedDesc;
+        }
+
+        if (simDocType && simItemGrp && simMrpType) {
+            simDocType.addEventListener('change', updateSimulation);
+            simItemGrp.addEventListener('change', updateSimulation);
+            simMrpType.addEventListener('change', updateSimulation);
+        }
+
+        // Table Reference Search Filter
+        const tableSearchInput = document.getElementById('tableSearchInput');
+        const tableReferenceBody = document.getElementById('tableReferenceBody');
+
+        if (tableSearchInput && tableReferenceBody) {
+            tableSearchInput.addEventListener('keyup', (e) => {
+                const query = e.target.value.toLowerCase();
+                const rows = tableReferenceBody.getElementsByTagName('tr');
+
+                Array.from(rows).forEach(row => {
+                    const text = row.innerText.toLowerCase();
+                    if (text.includes(query)) {
+                        row.style.display = '';
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
+            });
+        }
+    </script>
+</body>
+</html>

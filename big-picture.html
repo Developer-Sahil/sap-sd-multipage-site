@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Big Picture · SAP SD Master Guide</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <script src="assets/js/tailwind-config.js"></script>
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased selection:bg-blue-500 selection:text-white">
+
+    <div id="mobileHeaderMount"></div>
+
+    <div class="flex min-h-screen">
+        <aside id="sidebar" class="fixed inset-y-0 left-0 z-40 w-72 bg-slate-900 text-slate-300 transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out flex flex-col shadow-2xl"></aside>
+
+        <main class="flex-1 lg:ml-72 p-4 md:p-8 lg:p-12 max-w-7xl mx-auto pt-20 lg:pt-8 space-y-6">
+
+            <section id="big-picture" class="space-y-6 scroll-mt-24">
+                <div class="border-b border-slate-200 pb-4">
+                    <h2 class="text-2xl font-bold text-slate-900 flex items-center space-x-3">
+                        <span class="w-8 h-8 rounded-lg bg-blue-100 text-blue-700 flex items-center justify-center text-sm font-bold">1</span>
+                        <span>The Big Picture: What SAP SD Does</span>
+                    </h2>
+                    <p class="text-slate-600 text-sm mt-1">Understanding the end-to-end Order-to-Cash process flow.</p>
+                </div>
+
+                <!-- Core Paradigm Callout -->
+                <div class="p-4 rounded-xl bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 flex items-start space-x-4">
+                    <i class="fa-solid fa-lightbulb text-blue-600 text-2xl mt-1"></i>
+                    <div>
+                        <h4 class="font-semibold text-blue-950 text-base">The Core Paradigm</h4>
+                        <p class="text-slate-700 text-sm mt-1">
+                            SAP SD is not a random collection of disconnected screens. Saving a single transaction automatically updates downstream logistics, updates inventory levels in real-time, generates financial postings, and drives availability requirements.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Process Flow Chart -->
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                    <h3 class="font-bold text-slate-800 text-base">Standard SD Document Flow</h3>
+
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse text-sm">
+                            <thead>
+                                <tr class="bg-slate-100 border-b border-slate-200 text-slate-700">
+                                    <th class="p-3 font-semibold">Business Step</th>
+                                    <th class="p-3 font-semibold">SAP Document / Object</th>
+                                    <th class="p-3 font-semibold">Standard Code (ECC)</th>
+                                    <th class="p-3 font-semibold">Main Business Question Answered</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-100 text-slate-600">
+                                <tr class="hover:bg-slate-50">
+                                    <td class="p-3 font-medium text-slate-800">1. Customer Offer Request</td>
+                                    <td class="p-3">Inquiry / Quotation</td>
+                                    <td class="p-3 font-mono text-xs bg-slate-100 inline-block rounded px-1.5 py-0.5 mt-1">IN / QT</td>
+                                    <td class="p-3">What can we offer, and under what terms?</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50">
+                                    <td class="p-3 font-medium text-slate-800">2. Order Placement</td>
+                                    <td class="p-3">Sales Order</td>
+                                    <td class="p-3 font-mono text-xs bg-blue-100 text-blue-800 inline-block rounded px-1.5 py-0.5 mt-1 font-semibold">TA / OR</td>
+                                    <td class="p-3">What exact products/services must we supply?</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50">
+                                    <td class="p-3 font-medium text-slate-800">3. Shipping Prep</td>
+                                    <td class="p-3">Outbound Delivery</td>
+                                    <td class="p-3 font-mono text-xs bg-slate-100 inline-block rounded px-1.5 py-0.5 mt-1">LF</td>
+                                    <td class="p-3">What items will be picked, packed, and staged?</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50">
+                                    <td class="p-3 font-medium text-slate-800">4. Goods Movement</td>
+                                    <td class="p-3">Goods Issue (PGI)</td>
+                                    <td class="p-3 font-mono text-xs bg-slate-100 inline-block rounded px-1.5 py-0.5 mt-1">mvt 601</td>
+                                    <td class="p-3">Has inventory physically left our ownership/control?</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50">
+                                    <td class="p-3 font-medium text-slate-800">5. Invoicing</td>
+                                    <td class="p-3">Billing Document</td>
+                                    <td class="p-3 font-mono text-xs bg-slate-100 inline-block rounded px-1.5 py-0.5 mt-1">F2</td>
+                                    <td class="p-3">What final monetary amount should be charged?</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50">
+                                    <td class="p-3 font-medium text-slate-800">6. Accounting Integration</td>
+                                    <td class="p-3">FI Accounting Document</td>
+                                    <td class="p-3 font-mono text-xs bg-emerald-100 text-emerald-800 inline-block rounded px-1.5 py-0.5 mt-1">RV Posting</td>
+                                    <td class="p-3">What accounts receivable & revenue postings occur?</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Configuration vs Master Data vs Transactional Data -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-2">
+                        <div class="w-8 h-8 rounded-lg bg-purple-100 text-purple-700 flex items-center justify-center font-bold text-sm">
+                            <i class="fa-solid fa-sliders"></i>
+                        </div>
+                        <h4 class="font-bold text-slate-900">Configuration Layer</h4>
+                        <p class="text-xs text-slate-500">Defines system behavior & policy rules.</p>
+                        <p class="text-xs text-slate-700 bg-slate-50 p-2.5 rounded-lg border border-slate-100 font-mono">
+                            Example: "Standard order TA requires delivery type LF."
+                        </p>
+                    </div>
+
+                    <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-2">
+                        <div class="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold text-sm">
+                            <i class="fa-solid fa-database"></i>
+                        </div>
+                        <h4 class="font-bold text-slate-900">Master Data Layer</h4>
+                        <p class="text-xs text-slate-500">Reusable facts across multiple sales events.</p>
+                        <p class="text-xs text-slate-700 bg-slate-50 p-2.5 rounded-lg border border-slate-100 font-mono">
+                            Example: Customer 100000, Material BVL10, Shipping Condition 01.
+                        </p>
+                    </div>
+
+                    <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-2">
+                        <div class="w-8 h-8 rounded-lg bg-amber-100 text-amber-700 flex items-center justify-center font-bold text-sm">
+                            <i class="fa-solid fa-receipt"></i>
+                        </div>
+                        <h4 class="font-bold text-slate-900">Transactional Layer</h4>
+                        <p class="text-xs text-slate-500">Records a single, specific business event.</p>
+                        <p class="text-xs text-slate-700 bg-slate-50 p-2.5 rounded-lg border border-slate-100 font-mono">
+                            Example: Sales Order 50000123, Outbound Delivery 80000456.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <div id="topicFooter"></div>
+        </main>
+    </div>
+
+    <script src="assets/js/topics.js"></script>
+    <script src="assets/js/nav.js"></script>
+    <script src="assets/js/common.js"></script>
+</body>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Master Data & Config · SAP SD Master Guide</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <script src="assets/js/tailwind-config.js"></script>
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased selection:bg-blue-500 selection:text-white">
+
+    <div id="mobileHeaderMount"></div>
+
+    <div class="flex min-h-screen">
+        <aside id="sidebar" class="fixed inset-y-0 left-0 z-40 w-72 bg-slate-900 text-slate-300 transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out flex flex-col shadow-2xl"></aside>
+
+        <main class="flex-1 lg:ml-72 p-4 md:p-8 lg:p-12 max-w-7xl mx-auto pt-20 lg:pt-8 space-y-6">
+
+            <section id="ch2-master-data" class="space-y-6 scroll-mt-24">
+                <div class="border-b border-slate-200 pb-4">
+                    <h2 class="text-2xl font-bold text-slate-900 flex items-center space-x-3">
+                        <span class="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center text-sm font-bold">3</span>
+                        <span>Chapter 2: Master Data & Configuration Controls</span>
+                    </h2>
+                    <p class="text-slate-600 text-sm mt-1">Controlling customer behavior, material rules, and default priorities.</p>
+                </div>
+
+                <!-- Account Groups & Field Selection -->
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                    <h3 class="font-bold text-slate-800 text-base">Account Group Controls & Units of Measure</h3>
+                    <p class="text-slate-600 text-xs leading-relaxed">
+                        The <strong>Account Group</strong> controls how customer master screens behave. Fields can be set to: <span class="font-semibold text-slate-800">Suppress, Display, Optional, or Required</span>. This guarantees data quality across various partner types.
+                    </p>
+
+                    <!-- Unit of Measure Conversion Diagram -->
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-3">
+                        <div class="font-bold text-xs text-slate-700 uppercase font-mono tracking-wider">Units of Measure Hierarchy Example</div>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
+                            <div class="bg-white p-3 rounded-lg border border-slate-200 shadow-xs">
+                                <span class="px-2 py-0.5 rounded bg-slate-100 text-slate-700 font-bold font-mono text-[10px]">Base Unit</span>
+                                <div class="font-bold text-sm text-slate-800 mt-1">1 Piece</div>
+                                <p class="text-slate-500 text-[11px] mt-0.5">Fundamental unit for stock valuation & inventory balance.</p>
+                            </div>
+                            <div class="bg-white p-3 rounded-lg border border-slate-200 shadow-xs">
+                                <span class="px-2 py-0.5 rounded bg-blue-100 text-blue-800 font-bold font-mono text-[10px]">Sales Unit</span>
+                                <div class="font-bold text-sm text-blue-900 mt-1">1 Box (= 5 Pieces)</div>
+                                <p class="text-slate-500 text-[11px] mt-0.5">Proposed default unit during order entry.</p>
+                            </div>
+                            <div class="bg-white p-3 rounded-lg border border-slate-200 shadow-xs">
+                                <span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-bold font-mono text-[10px]">Delivery Unit</span>
+                                <div class="font-bold text-sm text-emerald-900 mt-1">Multiples of 30 Pcs</div>
+                                <p class="text-slate-500 text-[11px] mt-0.5">Restricts delivery creation to exact pallet/crate multiples.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Priority Source Box -->
+                <div class="p-5 rounded-2xl bg-amber-50 border border-amber-200 space-y-3">
+                    <h4 class="font-bold text-amber-950 text-sm flex items-center space-x-2">
+                        <i class="fa-solid fa-layer-group text-amber-600"></i>
+                        <span>Customer-Material Information Record & Master Data Priority</span>
+                    </h4>
+                    <p class="text-slate-700 text-xs leading-relaxed">
+                        When SAP looks for delivering plants, delivery priorities, or customer-specific material identifiers, it follows a strict 3-tier priority sequence:
+                    </p>
+                    <div class="flex flex-col md:flex-row items-center gap-2 text-xs font-semibold">
+                        <div class="bg-amber-600 text-white px-3 py-2 rounded-lg text-center w-full md:w-auto shadow-xs">
+                            1. Cust-Mat Info Record (VD51)
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-amber-400 hidden md:inline"></i>
+                        <i class="fa-solid fa-chevron-down text-amber-400 md:hidden"></i>
+                        <div class="bg-amber-500 text-white px-3 py-2 rounded-lg text-center w-full md:w-auto shadow-xs">
+                            2. Customer Master (VD01/XD01)
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-amber-400 hidden md:inline"></i>
+                        <i class="fa-solid fa-chevron-down text-amber-400 md:hidden"></i>
+                        <div class="bg-amber-400 text-amber-950 px-3 py-2 rounded-lg text-center w-full md:w-auto shadow-xs">
+                            3. Material Master (MM01)
+                        </div>
+                    </div>
+                    <p class="text-amber-900 text-[11px] italic">
+                        * Example: Customer-specific plant defaults in VD51 will always override general plant defaults in the Material Master!
+                    </p>
+                </div>
+            </section>
+
+            <div id="topicFooter"></div>
+        </main>
+    </div>
+
+    <script src="assets/js/topics.js"></script>
+    <script src="assets/js/nav.js"></script>
+    <script src="assets/js/common.js"></script>
+</body>
+</html>

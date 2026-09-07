@@ -1,0 +1,82 @@
+<!--
+  TEMPLATE FOR A NEW TOPIC PAGE
+  =============================
+  1. Copy this file and rename it, e.g. "pricing.html" (keep it in the root folder, next to index.html).
+  2. Change the <title> below and replace the placeholder <section> with your content.
+  3. Open assets/js/topics.js and add one entry to the TOPICS array, e.g.:
+       {
+         id: 'pricing',
+         title: 'Pricing & Condition Technique',
+         file: 'pricing.html',
+         icon: 'fa-solid fa-tags',
+         color: 'rose',
+         group: 'Core Guide',
+         desc: 'One-line summary shown on the home page card.'
+       }
+  4. Save, open index.html to confirm the new card + sidebar link appear, then commit & push.
+  That's it — no other file needs to change.
+-->
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Topic Title · SAP SD Master Guide</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <script src="assets/js/tailwind-config.js"></script>
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased selection:bg-blue-500 selection:text-white">
+
+    <div id="mobileHeaderMount"></div>
+
+    <div class="flex min-h-screen">
+        <aside id="sidebar" class="fixed inset-y-0 left-0 z-40 w-72 bg-slate-900 text-slate-300 transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out flex flex-col shadow-2xl"></aside>
+
+        <main class="flex-1 lg:ml-72 p-4 md:p-8 lg:p-12 max-w-7xl mx-auto pt-20 lg:pt-8 space-y-6">
+
+            <section class="space-y-6 scroll-mt-24">
+                <div class="border-b border-slate-200 pb-4">
+                    <h2 class="text-2xl font-bold text-slate-900 flex items-center space-x-3">
+                        <span class="w-8 h-8 rounded-lg bg-rose-100 text-rose-700 flex items-center justify-center text-sm font-bold">?</span>
+                        <span>New Topic Title</span>
+                    </h2>
+                    <p class="text-slate-600 text-sm mt-1">One-line description of what this page covers.</p>
+                </div>
+
+                <!-- Replace everything below with your own content. Reuse these card/callout
+                     patterns freely, or add plain <p>/<table>/<ul> markup — any standard HTML
+                     works, Tailwind utility classes are already loaded via the CDN script. -->
+
+                <div class="p-4 rounded-xl bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 flex items-start space-x-4">
+                    <i class="fa-solid fa-lightbulb text-blue-600 text-2xl mt-1"></i>
+                    <div>
+                        <h4 class="font-semibold text-blue-950 text-base">Key Idea</h4>
+                        <p class="text-slate-700 text-sm mt-1">Write your callout text here.</p>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                    <h3 class="font-bold text-slate-800 text-base">A Content Block</h3>
+                    <p class="text-slate-600 text-sm">Your notes, tables, or diagrams go here.</p>
+                </div>
+
+                <!-- Interactive widgets: if this page needs a quiz reveal, a searchable table, or
+                     the determination simulator, reuse toggleAnswer() / initTableSearch() /
+                     initSimulator() from assets/js/common.js — see quiz.html, tables.html, and
+                     simulator.html for working examples. -->
+            </section>
+
+            <div id="topicFooter"></div>
+        </main>
+    </div>
+
+    <script src="assets/js/topics.js"></script>
+    <script src="assets/js/nav.js"></script>
+    <script src="assets/js/common.js"></script>
+</body>
+</html>

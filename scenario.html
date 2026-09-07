@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Worked Scenario: Northstar · SAP SD Master Guide</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <script src="assets/js/tailwind-config.js"></script>
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased selection:bg-blue-500 selection:text-white">
+
+    <div id="mobileHeaderMount"></div>
+
+    <div class="flex min-h-screen">
+        <aside id="sidebar" class="fixed inset-y-0 left-0 z-40 w-72 bg-slate-900 text-slate-300 transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out flex flex-col shadow-2xl"></aside>
+
+        <main class="flex-1 lg:ml-72 p-4 md:p-8 lg:p-12 max-w-7xl mx-auto pt-20 lg:pt-8 space-y-6">
+
+            <section id="northstar-scenario" class="space-y-6 scroll-mt-24">
+                <div class="border-b border-slate-200 pb-4">
+                    <h2 class="text-2xl font-bold text-slate-900 flex items-center space-x-3">
+                        <span class="w-8 h-8 rounded-lg bg-cyan-100 text-cyan-700 flex items-center justify-center text-sm font-bold">7</span>
+                        <span>Complete Worked Scenario: Northstar Components</span>
+                    </h2>
+                    <p class="text-slate-600 text-sm mt-1">Connecting Chapters 1, 2, and 3 through a comprehensive end-to-end business story.</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-6">
+                    <!-- Scenario Specs -->
+                    <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+                        <div>
+                            <span class="font-bold text-slate-700">Selling Entity:</span>
+                            <div class="font-mono text-slate-900 mt-0.5">Northstar Components (Sales Org NS01)</div>
+                        </div>
+                        <div>
+                            <span class="font-bold text-slate-700">Customer:</span>
+                            <div class="font-mono text-slate-900 mt-0.5">Metro Machines (Sold-to / Ship-to)</div>
+                        </div>
+                        <div>
+                            <span class="font-bold text-slate-700">Sales Area:</span>
+                            <div class="font-mono text-blue-700 font-bold mt-0.5">NS01 / 10 (Wholesale) / 01 (Spare Parts)</div>
+                        </div>
+                    </div>
+
+                    <!-- Step Timeline -->
+                    <div class="space-y-4 text-xs">
+                        <!-- Step 1 -->
+                        <div class="flex items-start space-x-3 p-3 rounded-lg bg-slate-50 border border-slate-100">
+                            <span class="w-6 h-6 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">1</span>
+                            <div>
+                                <h4 class="font-bold text-slate-800 text-sm">Step 1: Org & Context Determination</h4>
+                                <p class="text-slate-600 mt-0.5">Order entered in Sales Area <strong>NS01/10/01</strong>. System determines delivering Plant <strong>NS01</strong> and express Shipping Point <strong>EX01</strong> based on customer shipping conditions.</p>
+                            </div>
+                        </div>
+
+                        <!-- Step 2 -->
+                        <div class="flex items-start space-x-3 p-3 rounded-lg bg-slate-50 border border-slate-100">
+                            <span class="w-6 h-6 rounded-full bg-indigo-600 text-white flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">2</span>
+                            <div>
+                                <h4 class="font-bold text-slate-800 text-sm">Step 2: Master Data & Overrides</h4>
+                                <p class="text-slate-600 mt-0.5">Internal Material <strong>NS-100</strong> (stocked in Pcs, sold in Boxes of 20). Customer Info-Record maps customer code <strong>MM-CON-77</strong> and overrides general description automatically.</p>
+                            </div>
+                        </div>
+
+                        <!-- Step 3 -->
+                        <div class="flex items-start space-x-3 p-3 rounded-lg bg-slate-50 border border-slate-100">
+                            <span class="w-6 h-6 rounded-full bg-emerald-600 text-white flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">3</span>
+                            <div>
+                                <h4 class="font-bold text-slate-800 text-sm">Step 3: Document & Schedule Line Execution</h4>
+                                <p class="text-slate-600 mt-0.5">Standard Order <strong>TA</strong> determines Item Category <strong>TAN</strong> and Schedule Line Category <strong>CP</strong>. ATP availability check confirms 60 boxes for immediate delivery and 40 boxes for next week.</p>
+                            </div>
+                        </div>
+
+                        <!-- Step 4 -->
+                        <div class="flex items-start space-x-3 p-3 rounded-lg bg-slate-50 border border-slate-100">
+                            <span class="w-6 h-6 rounded-full bg-amber-600 text-white flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">4</span>
+                            <div>
+                                <h4 class="font-bold text-slate-800 text-sm">Step 4: Fulfillment, Goods Issue & Invoicing</h4>
+                                <p class="text-slate-600 mt-0.5">Copy Control creates Outbound Delivery <strong>LF</strong>. Picking occurs at EX01, followed by Goods Issue (mvt 601). Billing <strong>F2</strong> updates accounting revenue & receivables automatically.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <div id="topicFooter"></div>
+        </main>
+    </div>
+
+    <script src="assets/js/topics.js"></script>
+    <script src="assets/js/nav.js"></script>
+    <script src="assets/js/common.js"></script>
+</body>
+</html>

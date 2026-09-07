@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Technical Table Reference · SAP SD Master Guide</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <script src="assets/js/tailwind-config.js"></script>
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased selection:bg-blue-500 selection:text-white">
+
+    <div id="mobileHeaderMount"></div>
+
+    <div class="flex min-h-screen">
+        <aside id="sidebar" class="fixed inset-y-0 left-0 z-40 w-72 bg-slate-900 text-slate-300 transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out flex flex-col shadow-2xl"></aside>
+
+        <main class="flex-1 lg:ml-72 p-4 md:p-8 lg:p-12 max-w-7xl mx-auto pt-20 lg:pt-8 space-y-6">
+
+            <section id="table-reference" class="space-y-6 scroll-mt-24">
+                <div class="border-b border-slate-200 pb-4">
+                    <h2 class="text-2xl font-bold text-slate-900 flex items-center space-x-3">
+                        <span class="w-8 h-8 rounded-lg bg-violet-100 text-violet-700 flex items-center justify-center text-sm font-bold">8</span>
+                        <span>Technical SAP SD Database Table Reference</span>
+                    </h2>
+                    <p class="text-slate-600 text-sm mt-1">Frequently queried tables in Data Browser (SE16/SE16N).</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                    <div class="relative">
+                        <i class="fa-solid fa-magnifying-glass absolute left-3 top-3 text-slate-400"></i>
+                        <input id="tableSearchInput" type="text" placeholder="Search table name or description (e.g. VBAK, Header, Status)..." class="w-full pl-9 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse text-xs">
+                            <thead>
+                                <tr class="bg-slate-100 border-b border-slate-200 text-slate-700">
+                                    <th class="p-3 font-mono font-bold">Table Name</th>
+                                    <th class="p-3 font-semibold">Technical Description</th>
+                                    <th class="p-3 font-semibold">Functional Scope</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tableReferenceBody" class="divide-y divide-slate-100 text-slate-600 font-mono">
+                                <tr class="hover:bg-slate-50">
+                                    <td class="p-3 font-bold text-blue-600">VBAK</td>
+                                    <td class="p-3 font-sans">Sales Document: Header Data</td>
+                                    <td class="p-3 font-sans text-slate-500">Sales Org, Doc Type, Customer, Value</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50">
+                                    <td class="p-3 font-bold text-blue-600">VBAP</td>
+                                    <td class="p-3 font-sans">Sales Document: Item Data</td>
+                                    <td class="p-3 font-sans text-slate-500">Material, Item Category, Quantities, Plant</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50">
+                                    <td class="p-3 font-bold text-blue-600">VBEP</td>
+                                    <td class="p-3 font-sans">Sales Document: Schedule Line Data</td>
+                                    <td class="p-3 font-sans text-slate-500">Delivery Dates, Confirmed Quantities</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50">
+                                    <td class="p-3 font-bold text-blue-600">VBPA</td>
+                                    <td class="p-3 font-sans">Sales Document: Partner Functions</td>
+                                    <td class="p-3 font-sans text-slate-500">Sold-to, Ship-to, Bill-to, Payer assignments</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50">
+                                    <td class="p-3 font-bold text-blue-600">LIKP</td>
+                                    <td class="p-3 font-sans">SD Document: Delivery Header Data</td>
+                                    <td class="p-3 font-sans text-slate-500">Shipping Point, Route, Delivery Dates</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50">
+                                    <td class="p-3 font-bold text-blue-600">LIPS</td>
+                                    <td class="p-3 font-sans">SD Document: Delivery Item Data</td>
+                                    <td class="p-3 font-sans text-slate-500">Picked Qty, Batch Number, Storage Location</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50">
+                                    <td class="p-3 font-bold text-blue-600">VBRK</td>
+                                    <td class="p-3 font-sans">Billing Document: Header Data</td>
+                                    <td class="p-3 font-sans text-slate-500">Payer, Billing Date, Net Value, Tax</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50">
+                                    <td class="p-3 font-bold text-blue-600">VBRP</td>
+                                    <td class="p-3 font-sans">Billing Document: Item Data</td>
+                                    <td class="p-3 font-sans text-slate-500">Billed Material, Invoiced Quantities</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50">
+                                    <td class="p-3 font-bold text-blue-600">VBFA</td>
+                                    <td class="p-3 font-sans">Sales Document Flow</td>
+                                    <td class="p-3 font-sans text-slate-500">Links Predecessor and Successor Docs</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <div id="topicFooter"></div>
+        </main>
+    </div>
+
+    <script src="assets/js/topics.js"></script>
+    <script src="assets/js/nav.js"></script>
+    <script src="assets/js/common.js"></script>
+    <script>
+        initTableSearch('tableSearchInput', 'tableReferenceBody');
+    </script>
+</body>
+</html>
