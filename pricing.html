@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configure Pricing · SAP SD Master Guide</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <script src="assets/js/tailwind-config.js"></script>
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased selection:bg-blue-500 selection:text-white">
+
+    <div id="mobileHeaderMount"></div>
+
+    <div class="flex min-h-screen">
+        <aside id="sidebar" class="fixed inset-y-0 left-0 z-40 w-72 bg-slate-900 text-slate-300 transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out flex flex-col shadow-2xl"></aside>
+
+        <main class="flex-1 lg:ml-72 p-4 md:p-8 lg:p-12 max-w-7xl mx-auto pt-20 lg:pt-8 space-y-6">
+
+            <section id="pricing-configuration" class="space-y-6 scroll-mt-24">
+                <div class="border-b border-slate-200 pb-4">
+                    <h2 class="text-2xl font-bold text-slate-900 flex items-center space-x-3">
+                        <span class="w-8 h-8 rounded-lg bg-rose-100 text-rose-700 flex items-center justify-center text-sm font-bold">5</span>
+                        <span>Configure Pricing</span>
+                    </h2>
+                    <p class="text-slate-600 text-sm mt-1">The condition technique, pricing procedures, procedure determination, exclusion groups, and pricing limits.</p>
+                </div>
+
+                <!-- Hero: what is the condition technique -->
+                <div class="p-6 rounded-2xl bg-gradient-to-r from-rose-900 via-slate-900 to-indigo-950 text-white shadow-xl space-y-4">
+                    <div class="flex items-center space-x-2 text-rose-400 font-mono text-xs uppercase font-bold tracking-wider">
+                        <i class="fa-solid fa-tags"></i>
+                        <span>The Single Largest Configuration Technique in SD</span>
+                    </div>
+                    <h3 class="text-xl md:text-2xl font-extrabold">"Of the many possible prices for this product, which one does SAP actually use?"</h3>
+                    <p class="text-slate-300 text-xs md:text-sm leading-relaxed">
+                        The <strong>condition technique</strong> is how SAP chooses between competing alternatives — a list price, a customer-specific price, a material discount — based on the conditions of the sale (who's buying, what they're buying, which sales area). It isn't only used for pricing: text determination, output determination, material determination, and account determination all reuse the exact same mechanism.
+                    </p>
+                </div>
+
+                <!-- The chain + key condition types -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                        <h3 class="font-bold text-slate-800 text-base flex items-center space-x-2">
+                            <i class="fa-solid fa-link text-rose-600"></i>
+                            <span>The Condition Technique Chain</span>
+                        </h3>
+                        <div class="space-y-2.5 text-xs">
+                            <div class="flex items-start space-x-3 p-2.5 rounded-lg bg-slate-50 border border-slate-100">
+                                <span class="w-5 h-5 rounded-full bg-rose-600 text-white flex items-center justify-center font-bold text-[10px] shrink-0">1</span>
+                                <div><strong class="text-slate-800">Field Catalog:</strong> the pool of fields (customer, material, sales org...) available to build condition tables from.</div>
+                            </div>
+                            <div class="flex items-start space-x-3 p-2.5 rounded-lg bg-slate-50 border border-slate-100">
+                                <span class="w-5 h-5 rounded-full bg-rose-600 text-white flex items-center justify-center font-bold text-[10px] shrink-0">2</span>
+                                <div><strong class="text-slate-800">Condition Table:</strong> a specific combination of fields (e.g. SalesOrg + Customer + Material) that a condition record can be stored against.</div>
+                            </div>
+                            <div class="flex items-start space-x-3 p-2.5 rounded-lg bg-slate-50 border border-slate-100">
+                                <span class="w-5 h-5 rounded-full bg-rose-600 text-white flex items-center justify-center font-bold text-[10px] shrink-0">3</span>
+                                <div><strong class="text-slate-800">Access Sequence:</strong> the tables to search, in order, most-specific to most-general.</div>
+                            </div>
+                            <div class="flex items-start space-x-3 p-2.5 rounded-lg bg-slate-50 border border-slate-100">
+                                <span class="w-5 h-5 rounded-full bg-rose-600 text-white flex items-center justify-center font-bold text-[10px] shrink-0">4</span>
+                                <div><strong class="text-slate-800">Condition Type:</strong> the pricing element (price, discount, surcharge, tax) that owns one access sequence.</div>
+                            </div>
+                            <div class="flex items-start space-x-3 p-2.5 rounded-lg bg-slate-50 border border-slate-100">
+                                <span class="w-5 h-5 rounded-full bg-rose-600 text-white flex items-center justify-center font-bold text-[10px] shrink-0">5</span>
+                                <div><strong class="text-slate-800">Pricing Procedure:</strong> the ordered list of condition types that produces the final net/total value.</div>
+                            </div>
+                        </div>
+                        <p class="text-xs text-slate-500">The result of walking this chain is a <strong>condition record</strong> — the actual stored value (e.g. "$450 for Customer 1000 / Material X").</p>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                        <h3 class="font-bold text-slate-800 text-base flex items-center space-x-2">
+                            <i class="fa-solid fa-list-check text-indigo-600"></i>
+                            <span>Condition Types Worth Knowing</span>
+                        </h3>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-[11px] text-left">
+                                <thead>
+                                    <tr class="text-slate-400 uppercase text-[10px] font-mono border-b border-slate-100">
+                                        <th class="py-1.5 pr-2 font-semibold">Type</th>
+                                        <th class="py-1.5 pr-2 font-semibold">Meaning</th>
+                                        <th class="py-1.5 font-semibold">Class</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-slate-50 font-mono">
+                                    <tr><td class="py-1.5 pr-2 font-bold text-slate-800">PR00</td><td class="py-1.5 pr-2 font-sans text-slate-600">Standard material price</td><td class="py-1.5 text-slate-400">Price</td></tr>
+                                    <tr><td class="py-1.5 pr-2 font-bold text-slate-800">K005</td><td class="py-1.5 pr-2 font-sans text-slate-600">Customer/material discount</td><td class="py-1.5 text-slate-400">Disc.</td></tr>
+                                    <tr><td class="py-1.5 pr-2 font-bold text-slate-800">K007</td><td class="py-1.5 pr-2 font-sans text-slate-600">Customer % discount</td><td class="py-1.5 text-slate-400">Disc.</td></tr>
+                                    <tr><td class="py-1.5 pr-2 font-bold text-slate-800">RB00</td><td class="py-1.5 pr-2 font-sans text-slate-600">Manual discount (value)</td><td class="py-1.5 text-slate-400">Disc.</td></tr>
+                                    <tr><td class="py-1.5 pr-2 font-bold text-slate-800">KF00</td><td class="py-1.5 pr-2 font-sans text-slate-600">Freight surcharge</td><td class="py-1.5 text-slate-400">Disc.</td></tr>
+                                    <tr><td class="py-1.5 pr-2 font-bold text-slate-800">VPRS</td><td class="py-1.5 pr-2 font-sans text-slate-600">Cost (from material master)</td><td class="py-1.5 text-slate-400">Stat.</td></tr>
+                                    <tr><td class="py-1.5 pr-2 font-bold text-slate-800">MWST</td><td class="py-1.5 pr-2 font-sans text-slate-600">Output tax / VAT</td><td class="py-1.5 text-slate-400">Tax</td></tr>
+                                    <tr><td class="py-1.5 pr-2 font-bold text-slate-800">PI01/PI02</td><td class="py-1.5 pr-2 font-sans text-slate-600">Intercompany price / %</td><td class="py-1.5 text-slate-400">Price</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <p class="text-xs text-slate-500">Never edit a standard type directly — copy it (e.g. <code class="font-mono text-rose-700">K007 → Z007</code>) and rename the key with a <code class="font-mono">Z</code> prefix.</p>
+                    </div>
+                </div>
+
+                <!-- 9-step customizing sequence -->
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                    <h3 class="font-bold text-slate-800 text-base flex items-center space-x-2">
+                        <i class="fa-solid fa-list-ol text-rose-600"></i>
+                        <span>The 9-Step Customizing Sequence</span>
+                    </h3>
+                    <p class="text-slate-600 text-xs">Build the condition technique bottom-up — every later step depends on the one before it.</p>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-2.5 text-xs">
+                        <div class="flex items-start space-x-2.5 p-2.5 rounded-lg bg-slate-50 border border-slate-100">
+                            <span class="w-5 h-5 rounded-full bg-slate-700 text-white flex items-center justify-center font-bold text-[10px] shrink-0">1</span>
+                            <span>Add any missing fields to the <strong>field catalog</strong>.</span>
+                        </div>
+                        <div class="flex items-start space-x-2.5 p-2.5 rounded-lg bg-slate-50 border border-slate-100">
+                            <span class="w-5 h-5 rounded-full bg-slate-700 text-white flex items-center justify-center font-bold text-[10px] shrink-0">2</span>
+                            <span>Create the <strong>condition tables</strong> you need <code class="font-mono">[V/05]</code>.</span>
+                        </div>
+                        <div class="flex items-start space-x-2.5 p-2.5 rounded-lg bg-slate-50 border border-slate-100">
+                            <span class="w-5 h-5 rounded-full bg-slate-700 text-white flex items-center justify-center font-bold text-[10px] shrink-0">3</span>
+                            <span>Create the <strong>access sequence</strong> <code class="font-mono">[V/07]</code>.</span>
+                        </div>
+                        <div class="flex items-start space-x-2.5 p-2.5 rounded-lg bg-slate-50 border border-slate-100">
+                            <span class="w-5 h-5 rounded-full bg-slate-700 text-white flex items-center justify-center font-bold text-[10px] shrink-0">4</span>
+                            <span>Assign the condition tables to it, most-specific first.</span>
+                        </div>
+                        <div class="flex items-start space-x-2.5 p-2.5 rounded-lg bg-slate-50 border border-slate-100">
+                            <span class="w-5 h-5 rounded-full bg-slate-700 text-white flex items-center justify-center font-bold text-[10px] shrink-0">5</span>
+                            <span>Create the <strong>condition type</strong> <code class="font-mono">[V/06]</code>.</span>
+                        </div>
+                        <div class="flex items-start space-x-2.5 p-2.5 rounded-lg bg-slate-50 border border-slate-100">
+                            <span class="w-5 h-5 rounded-full bg-slate-700 text-white flex items-center justify-center font-bold text-[10px] shrink-0">6</span>
+                            <span>Assign the access sequence to the condition type.</span>
+                        </div>
+                        <div class="flex items-start space-x-2.5 p-2.5 rounded-lg bg-slate-50 border border-slate-100">
+                            <span class="w-5 h-5 rounded-full bg-slate-700 text-white flex items-center justify-center font-bold text-[10px] shrink-0">7</span>
+                            <span>Add the condition type to a <strong>pricing procedure</strong> <code class="font-mono">[V/08]</code>.</span>
+                        </div>
+                        <div class="flex items-start space-x-2.5 p-2.5 rounded-lg bg-slate-50 border border-slate-100">
+                            <span class="w-5 h-5 rounded-full bg-slate-700 text-white flex items-center justify-center font-bold text-[10px] shrink-0">8</span>
+                            <span>Set up <strong>pricing procedure determination</strong> (CuPP + DoPP + sales area).</span>
+                        </div>
+                        <div class="flex items-start space-x-2.5 p-2.5 rounded-lg bg-rose-600 text-white shadow-md">
+                            <span class="w-5 h-5 rounded-full bg-white text-rose-700 flex items-center justify-center font-bold text-[10px] shrink-0">9</span>
+                            <span>Create the <strong>condition records</strong> <code class="font-mono">[VK11]</code> — nothing prices until this happens.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Access sequence walkthrough + procedure determination -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                        <h3 class="font-bold text-slate-800 text-base flex items-center space-x-2">
+                            <i class="fa-solid fa-magnifying-glass text-emerald-600"></i>
+                            <span>Access Sequence Example: Z007</span>
+                        </h3>
+                        <p class="text-slate-600 text-xs">Most-specific table first, most-general last. The system stops at the first hit.</p>
+                        <div class="bg-slate-900 text-white p-4 rounded-xl space-y-3 font-mono text-xs">
+                            <div class="flex items-center justify-between p-2 bg-slate-800 rounded border border-emerald-900/60">
+                                <span>10 · Table 909</span>
+                                <span class="text-slate-300">SalesOrg + PriceGroup + Material</span>
+                            </div>
+                            <div class="text-center text-slate-500 text-[11px]"><i class="fa-solid fa-arrow-down"></i> not found, try next</div>
+                            <div class="flex items-center justify-between p-2 bg-slate-800 rounded border border-amber-900/60">
+                                <span>20 · Table 004</span>
+                                <span class="text-slate-300">Material only</span>
+                            </div>
+                        </div>
+                        <p class="text-[11px] text-slate-500">The <strong>exclusive indicator</strong> on a step stops the search once a record is found — set it to avoid wasted table reads and, when using exclusion groups, unset it so every candidate gets a chance to be compared.</p>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                        <h3 class="font-bold text-slate-800 text-base flex items-center space-x-2">
+                            <i class="fa-solid fa-diagram-project text-blue-600"></i>
+                            <span>Pricing Procedure Determination</span>
+                        </h3>
+                        <p class="text-slate-600 text-xs">Which pricing procedure a document uses is never hardcoded — it's determined from three inputs:</p>
+                        <div class="bg-slate-900 text-white p-4 rounded-xl space-y-2.5 text-xs font-mono">
+                            <div class="flex items-center justify-between p-2 bg-slate-800 rounded border border-slate-700">
+                                <span>Sales Area</span>
+                                <span class="text-slate-400 text-[10px]">SOrg+DChl+Div</span>
+                            </div>
+                            <div class="flex items-center justify-between p-2 bg-slate-800 rounded border border-slate-700">
+                                <span>Customer Pricing Proc. (CuPP)</span>
+                                <span class="text-slate-400 text-[10px]">[OVKP], on cust. master</span>
+                            </div>
+                            <div class="flex items-center justify-between p-2 bg-slate-800 rounded border border-slate-700">
+                                <span>Document Pricing Proc. (DoPP)</span>
+                                <span class="text-slate-400 text-[10px]">[OVKJ]/[OVTP], on doc type</span>
+                            </div>
+                            <div class="text-center text-blue-400"><i class="fa-solid fa-arrow-down"></i></div>
+                            <div class="flex items-center justify-between p-2 bg-blue-600 rounded font-bold">
+                                <span>Pricing Procedure</span>
+                                <span class="text-blue-100 text-[10px]">e.g. RVAA01</span>
+                            </div>
+                        </div>
+                        <p class="text-[11px] text-slate-500">A billing document can use a <em>different</em> DoPP than the sales order that created it — useful when order and invoice pricing structures diverge.</p>
+                    </div>
+                </div>
+
+                <!-- Anatomy of a pricing procedure -->
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                    <h3 class="font-bold text-slate-800 text-base flex items-center space-x-2">
+                        <i class="fa-solid fa-table-cells text-violet-600"></i>
+                        <span>Anatomy of a Pricing Procedure (V/08)</span>
+                    </h3>
+                    <p class="text-slate-600 text-xs">Every column controls a distinct piece of behavior — this is the reference sheet for what each one does.</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2.5 text-xs">
+                        <div class="p-3 bg-slate-50 rounded-xl border border-slate-100"><strong class="text-slate-800 font-mono">Step / Cntr</strong><p class="text-slate-600 mt-0.5">Sequence number; Cntr allows multiple condition types at one step (e.g. three freight surcharges all at step 100).</p></div>
+                        <div class="p-3 bg-slate-50 rounded-xl border border-slate-100"><strong class="text-slate-800 font-mono">CTyp</strong><p class="text-slate-600 mt-0.5">The condition type — the backbone linking to the access sequence and condition record.</p></div>
+                        <div class="p-3 bg-slate-50 rounded-xl border border-slate-100"><strong class="text-slate-800 font-mono">From / To</strong><p class="text-slate-600 mt-0.5">Either the step range a subtotal sums, or the base step a % condition calculates from.</p></div>
+                        <div class="p-3 bg-slate-50 rounded-xl border border-slate-100"><strong class="text-slate-800 font-mono">Man / Mdt</strong><p class="text-slate-600 mt-0.5">Man = entered manually only; Mdt = mandatory, missing it blocks the document (e.g. delivery can't be created).</p></div>
+                        <div class="p-3 bg-slate-50 rounded-xl border border-slate-100"><strong class="text-slate-800 font-mono">Stat</strong><p class="text-slate-600 mt-0.5">Statistical — the value is shown but excluded from the Net Value total (e.g. VPRS cost).</p></div>
+                        <div class="p-3 bg-slate-50 rounded-xl border border-slate-100"><strong class="text-slate-800 font-mono">SubTo</strong><p class="text-slate-600 mt-0.5">Writes the running value into a subtotal field (A = credit price/<code>KOMP-CMPRE</code>, B = cost price, 4 = freight...) used downstream by credit checks, LIS, etc.</p></div>
+                        <div class="p-3 bg-slate-50 rounded-xl border border-slate-100"><strong class="text-slate-800 font-mono">Reqt</strong><p class="text-slate-600 mt-0.5">A requirement routine that must return true before this step is even accessed — the highest-leverage performance lever in the whole procedure.</p></div>
+                        <div class="p-3 bg-slate-50 rounded-xl border border-slate-100"><strong class="text-slate-800 font-mono">AltCTy / AltCBV</strong><p class="text-slate-600 mt-0.5">Alternative calculation type / base value formulas — override the standard condition technique math for a step (e.g. profit margin = net value − cost).</p></div>
+                        <div class="p-3 bg-slate-50 rounded-xl border border-slate-100"><strong class="text-slate-800 font-mono">ActKy / Accrls</strong><p class="text-slate-600 mt-0.5">Account key(s) routing the value to a GL account in FI — this is the pricing-to-accounting bridge.</p></div>
+                    </div>
+                    <div class="p-3 rounded-xl bg-amber-50 border border-amber-200 text-xs text-amber-950">
+                        <i class="fa-solid fa-triangle-exclamation mr-1.5"></i>
+                        A condition type of <strong>class B (price)</strong> allows only one active price per item — a second price-class condition type finding a value invalidates every price found before it in the procedure.
+                    </div>
+                </div>
+
+                <!-- Exclusion groups + pricing limits -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                        <h3 class="font-bold text-slate-800 text-base flex items-center space-x-2">
+                            <i class="fa-solid fa-shuffle text-teal-600"></i>
+                            <span>Condition Exclusion Groups</span>
+                        </h3>
+                        <p class="text-slate-600 text-xs">Stops a customer from stacking every applicable discount by keeping only the best (or worst) one active.</p>
+                        <div class="bg-slate-900 text-white p-4 rounded-xl space-y-2 font-mono text-xs">
+                            <div class="text-slate-400 text-[11px]">Item priced at $100 — two discounts compete:</div>
+                            <div class="flex justify-between"><span>K007 — 50% off</span><span class="text-emerald-400 font-bold">−$50</span></div>
+                            <div class="flex justify-between border-b border-slate-800 pb-2"><span>K005 — flat discount</span><span class="text-slate-500">−$45 (inactive)</span></div>
+                            <div class="flex justify-between font-bold text-yellow-400 pt-1"><span>Result: K007 wins</span><span>Best for customer</span></div>
+                        </div>
+                        <p class="text-[11px] text-slate-500">Drop the price to $90 and K007's 10% becomes only $9 — K005's flat $10 would then win instead. Exclusion groups re-evaluate per document, not statically.</p>
+                        <p class="text-[11px] text-slate-500"><strong>Required setup:</strong> exclusion group <code class="font-mono">[V/32]</code> → assign condition types → assign the group to the pricing procedure. Using "best within a type" instead of "best across types" also requires turning <em>off</em> the exclusive indicator on that type's access sequence, or the system stops at the first hit before it can compare.</p>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                        <h3 class="font-bold text-slate-800 text-base flex items-center space-x-2">
+                            <i class="fa-solid fa-gauge-high text-red-600"></i>
+                            <span>Pricing Limits</span>
+                        </h3>
+                        <p class="text-slate-600 text-xs">Any condition type editable in the sales order can be abused — a limit caps how far a rep can push it.</p>
+                        <div class="p-3 bg-red-50 rounded-xl border border-red-200 text-xs space-y-1">
+                            <div class="font-bold text-red-950">Example: discount Z100 capped at 100%</div>
+                            <p class="text-slate-600">Without an upper limit, an unchecked 100%+ manual discount can push net value negative — effectively handing the customer a credit note through a sales order.</p>
+                        </div>
+                        <p class="text-[11px] text-slate-500">Set via <code class="font-mono">[OVB2]</code>. Prefer <strong>percentage-based</strong> limits for discounts (they scale with quantity); use <strong>value-based</strong> limits for flat caps like a maximum freight surcharge.</p>
+                        <div class="p-3 bg-slate-50 rounded-xl border border-slate-100 text-[11px] text-slate-600">
+                            <strong class="text-slate-800">Also gate pricing at the item category level</strong> — <code class="font-mono">[VOV7]</code> style config for pricing/statistics relevance, and separately activate cost determination so a condition type like VPRS actually resolves from the material's standard/moving-average price.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Price-relevant master data -->
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                    <h3 class="font-bold text-slate-800 text-base flex items-center space-x-2">
+                        <i class="fa-solid fa-id-card text-cyan-600"></i>
+                        <span>Price-Relevant Master Data Fields</span>
+                    </h3>
+                    <p class="text-slate-600 text-xs">Three fields exist purely to give pricing something coarser than "one customer, one material" to key off:</p>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
+                        <div class="p-3 rounded-xl bg-cyan-50 border border-cyan-200">
+                            <div class="font-bold text-cyan-950">Customer Price List Type</div>
+                            <p class="text-slate-600 mt-1">Groups customers who share a resale price list (e.g. "Wholesale" vs "Retail"). Lives on the customer master sales view.</p>
+                        </div>
+                        <div class="p-3 rounded-xl bg-cyan-50 border border-cyan-200">
+                            <div class="font-bold text-cyan-950">Customer Pricing Group</div>
+                            <p class="text-slate-600 mt-1">A freer-form segmentation of customers for discounting (e.g. "Key Account"). Also on the customer master.</p>
+                        </div>
+                        <div class="p-3 rounded-xl bg-cyan-50 border border-cyan-200">
+                            <div class="font-bold text-cyan-950">Material Group</div>
+                            <p class="text-slate-600 mt-1">Groups materials for pricing purposes. Set on the material master's Sales Org 2 view.</p>
+                        </div>
+                    </div>
+                    <p class="text-[11px] text-slate-500">A <strong>condition supplement</strong> attaches automatically whenever its "parent" condition is found — e.g. every time a material's PR00 price is determined, an associated discount rides along without a separate access.</p>
+                </div>
+
+                <!-- Takeaways -->
+                <div class="bg-slate-900 text-white p-6 rounded-2xl shadow-xl space-y-4">
+                    <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+                        <h3 class="text-base font-bold text-yellow-400 flex items-center space-x-2">
+                            <i class="fa-solid fa-key"></i>
+                            <span>Top Certification & Project Takeaways for Pricing</span>
+                        </h3>
+                        <span class="text-xs font-mono bg-yellow-400/20 text-yellow-300 px-2.5 py-1 rounded-full font-bold">Must Know</span>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs font-sans">
+                        <div class="flex items-start space-x-2 bg-slate-800/80 p-3 rounded-xl border border-slate-700">
+                            <i class="fa-solid fa-check text-emerald-400 mt-0.5"></i>
+                            <span><strong>The chain is fixed:</strong> Field Catalog → Condition Table → Access Sequence → Condition Type → Pricing Procedure → Condition Record.</span>
+                        </div>
+                        <div class="flex items-start space-x-2 bg-slate-800/80 p-3 rounded-xl border border-slate-700">
+                            <i class="fa-solid fa-check text-emerald-400 mt-0.5"></i>
+                            <span><strong>Never edit standard objects:</strong> copy to a Z-prefixed key and modify the copy.</span>
+                        </div>
+                        <div class="flex items-start space-x-2 bg-slate-800/80 p-3 rounded-xl border border-slate-700">
+                            <i class="fa-solid fa-check text-emerald-400 mt-0.5"></i>
+                            <span><strong>Procedure determination = Sales Area + CuPP + DoPP.</strong> No pricing procedure is ever hardcoded to a document type alone.</span>
+                        </div>
+                        <div class="flex items-start space-x-2 bg-slate-800/80 p-3 rounded-xl border border-slate-700">
+                            <i class="fa-solid fa-check text-emerald-400 mt-0.5"></i>
+                            <span><strong>Requirements are the #1 performance lever</strong> — placing one at the pricing procedure step avoids reading the access sequence, tables, and fields entirely when it isn't needed.</span>
+                        </div>
+                        <div class="flex items-start space-x-2 bg-slate-800/80 p-3 rounded-xl border border-slate-700">
+                            <i class="fa-solid fa-check text-emerald-400 mt-0.5"></i>
+                            <span><strong>Pricing type G</strong> ("copy pricing elements unchanged and redetermine taxes") governs what re-prices when a document is copied — a classic interview question.</span>
+                        </div>
+                        <div class="flex items-start space-x-2 bg-slate-800/80 p-3 rounded-xl border border-slate-700">
+                            <i class="fa-solid fa-check text-emerald-400 mt-0.5"></i>
+                            <span><strong>Exclusion groups prevent discount stacking</strong> — always set them up wherever more than one discount could legitimately apply to the same item.</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <div id="topicFooter"></div>
+        </main>
+    </div>
+
+    <script src="assets/js/topics.js"></script>
+    <script src="assets/js/nav.js"></script>
+    <script src="assets/js/common.js"></script>
+</body>
+</html>

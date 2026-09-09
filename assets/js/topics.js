@@ -51,6 +51,15 @@ const TOPICS = [
     desc: 'Header/Item/Schedule Line architecture, the determination chain, and copy control t-codes.'
   },
   {
+    id: 'pricing',
+    title: 'Configure Pricing',
+    file: 'pricing.html',
+    icon: 'fa-solid fa-tags',
+    color: 'rose',
+    group: 'Core Guide',
+    desc: 'The condition technique, pricing procedures, procedure determination, exclusion groups, and pricing limits.'
+  },
+  {
     id: 'atp',
     title: 'Available-to-Promise (ATP)',
     file: 'atp.html',
