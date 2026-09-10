@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configuring a Sales Document Type · SAP SD Master Guide</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <script src="assets/js/tailwind-config.js"></script>
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased selection:bg-blue-500 selection:text-white">
+
+    <div id="mobileHeaderMount"></div>
+
+    <div class="flex min-h-screen">
+        <aside id="sidebar" class="fixed inset-y-0 left-0 z-40 w-72 bg-slate-900 text-slate-300 transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out flex flex-col shadow-2xl"></aside>
+
+        <main class="flex-1 lg:ml-72 p-4 md:p-8 lg:p-12 max-w-7xl mx-auto pt-20 lg:pt-8 space-y-6">
+
+            <section id="doc-type-config" class="space-y-6 scroll-mt-24">
+                <div class="border-b border-slate-200 pb-4">
+                    <h2 class="text-2xl font-bold text-slate-900 flex items-center space-x-3">
+                        <span class="w-8 h-8 rounded-lg bg-orange-100 text-orange-700 flex items-center justify-center text-sm font-bold">5</span>
+                        <span>Configuring a Sales Document Type</span>
+                    </h2>
+                    <p class="text-slate-600 text-sm mt-1">Field-by-field walkthrough of Define Sales Document Types [VOV8] and the standard SAP order types built on it.</p>
+                </div>
+
+                <!-- Hero -->
+                <div class="p-6 rounded-2xl bg-gradient-to-r from-orange-900 via-slate-900 to-indigo-950 text-white shadow-xl space-y-4">
+                    <div class="flex items-center space-x-2 text-orange-400 font-mono text-xs uppercase font-bold tracking-wider">
+                        <i class="fa-solid fa-sliders"></i>
+                        <span>Core SD Header Control Object</span>
+                    </div>
+                    <h3 class="text-xl md:text-2xl font-extrabold">"What kind of document is this, and how should the system behave because of it?"</h3>
+                    <p class="text-slate-300 text-xs md:text-sm leading-relaxed">
+                        The sales document type is the single control record that tells SAP whether an entered document is an order, a quotation, a returns request, or something else — and it drives number ranging, pricing procedure determination, output, incompletion, and billing behavior for the entire header. Configured via <strong>Define Sales Document Types [VOV8]</strong>, path: SPRO | Sales and Distribution | Sales | Sales Documents | Sales Document Header.
+                    </p>
+                </div>
+
+                <!-- Copy-first workflow & Numbering -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                        <h3 class="font-bold text-slate-800 text-base flex items-center space-x-2">
+                            <i class="fa-solid fa-copy text-orange-600"></i>
+                            <span>Always Copy, Never Edit Standard</span>
+                        </h3>
+                        <div class="space-y-2.5 text-xs">
+                            <div class="flex items-start space-x-3 p-2.5 rounded-lg bg-slate-50 border border-slate-100">
+                                <span class="w-5 h-5 rounded-full bg-orange-600 text-white flex items-center justify-center font-bold text-[10px] shrink-0">1</span>
+                                <div><strong class="text-slate-800">New document type:</strong> copy the SAP type that's the closest functional match (e.g. copy TA/OR for a new order type) so item category and schedule line category determination plus copy control rules come with it.</div>
+                            </div>
+                            <div class="flex items-start space-x-3 p-2.5 rounded-lg bg-slate-50 border border-slate-100">
+                                <span class="w-5 h-5 rounded-full bg-orange-600 text-white flex items-center justify-center font-bold text-[10px] shrink-0">2</span>
+                                <div><strong class="text-slate-800">Changing an SAP type:</strong> never edit it directly — copy it into the customer namespace (e.g. TA → ZTA) and change the copy instead, leaving the SAP standard untouched.</div>
+                            </div>
+                            <div class="flex items-start space-x-3 p-2.5 rounded-lg bg-slate-50 border border-slate-100">
+                                <span class="w-5 h-5 rounded-full bg-orange-600 text-white flex items-center justify-center font-bold text-[10px] shrink-0">3</span>
+                                <div><strong class="text-slate-800">Namespace rule:</strong> any new key must begin with <strong>Y</strong> or <strong>Z</strong> — SAP guarantees it will never overwrite these during an upgrade.</div>
+                            </div>
+                            <div class="flex items-start space-x-3 p-2.5 rounded-lg bg-slate-50 border border-slate-100">
+                                <span class="w-5 h-5 rounded-full bg-orange-600 text-white flex items-center justify-center font-bold text-[10px] shrink-0">4</span>
+                                <div><strong class="text-slate-800">Save confirmation:</strong> when you click Copy, confirm "Yes" to copy control rules so the source document's control tables replicate automatically for the new type.</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                        <h3 class="font-bold text-slate-800 text-base flex items-center space-x-2">
+                            <i class="fa-solid fa-list-ol text-indigo-600"></i>
+                            <span>Number Ranges</span>
+                        </h3>
+                        <p class="text-slate-600 text-xs">Every document type needs both an internal and an external number range interval assigned, even if only one is actively used.</p>
+                        <div class="bg-slate-900 text-slate-100 p-4 rounded-xl font-mono text-xs space-y-2 border border-slate-800">
+                            <div class="flex justify-between"><span class="text-slate-400">Internal number range</span><span class="text-emerald-400 font-bold">01</span></div>
+                            <div class="text-[11px] text-slate-400 pl-2">System assigns the next available number automatically on save.</div>
+                            <div class="flex justify-between pt-2 border-t border-slate-800"><span class="text-slate-400">External number range</span><span class="text-amber-400 font-bold">02</span></div>
+                            <div class="text-[11px] text-slate-400 pl-2">User enters the number manually (or it's inherited from a legacy system).</div>
+                        </div>
+                        <div class="p-3 rounded-xl bg-amber-50 border border-amber-200 text-xs text-amber-900">
+                            <strong>Transport gotcha:</strong> number range intervals are <strong>not</strong> automatically transported with the document type. If a duplicate-number error appears after a transport, check/reset the current number counter directly in <span class="font-mono">SE16</span>/<span class="font-mono">SE16N</span> on the number range table in the target system.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Header field walkthrough -->
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-5">
+                    <h3 class="font-bold text-slate-800 text-base flex items-center space-x-2">
+                        <i class="fa-solid fa-table-cells-large text-orange-600"></i>
+                        <span>VOV8 Field Walkthrough — Standard Order Type TA/OR</span>
+                    </h3>
+                    <p class="text-slate-600 text-xs">Reading the configuration of document type TA (Standard Order) section by section, per SAP's own settings.</p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
+                        <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 space-y-1">
+                            <div class="font-bold text-slate-800">Document Category = C</div>
+                            <p class="text-slate-600">Marks this as a sales order category, distinct from a quotation (B) or contract. Not editable once you're inside a copied type — set at creation.</p>
+                        </div>
+                        <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 space-y-1">
+                            <div class="font-bold text-slate-800">Blocked</div>
+                            <p class="text-slate-600">Blank — the type is unblocked and usable. Set to block a type from being used while it's still being configured.</p>
+                        </div>
+                        <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 space-y-1">
+                            <div class="font-bold text-slate-800">Item / Sub-item Increment</div>
+                            <p class="text-slate-600">10 / 10 — items number 10, 20, 30... leaving gaps for manually inserted lines; sub-items (BOM components) increment the same way.</p>
+                        </div>
+                        <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 space-y-1">
+                            <div class="font-bold text-slate-800">Reference Mandatory</div>
+                            <p class="text-slate-600">Blank for TA — an order does not require a preceding quotation. Quotation/contract types typically leave this blank too; some custom types require reference to an invoice for traceability.</p>
+                        </div>
+                        <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 space-y-1">
+                            <div class="font-bold text-slate-800">Document Probability</div>
+                            <p class="text-slate-600">100% for a standard order — the sale is treated as certain. Quotations instead combine an order-probability % from the customer master with the document type's own %.</p>
+                        </div>
+                        <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 space-y-1">
+                            <div class="font-bold text-slate-800">Read Info Record</div>
+                            <p class="text-slate-600">Checked — the system reads the customer-material info record (custom material numbers, descriptions, delivery tolerances) if one exists.</p>
+                        </div>
+                        <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 space-y-1">
+                            <div class="font-bold text-slate-800">Output Application</div>
+                            <p class="text-slate-600">Assigned for sales (V1) so output determination — order confirmations, EDI, etc. — can trigger. Full detail in output determination (Chapter 9).</p>
+                        </div>
+                        <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 space-y-1">
+                            <div class="font-bold text-slate-800">Screen Sequence Group</div>
+                            <p class="text-slate-600">Controls which screens/tabs and in what order the user sees when processing this document type (e.g. group AU for standard orders, AG for quotations).</p>
+                        </div>
+                        <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 space-y-1">
+                            <div class="font-bold text-slate-800">Incompletion Procedure</div>
+                            <p class="text-slate-600">11 at header level — determines which fields must be filled before the document is considered complete. See incompletion procedures (Chapter 4).</p>
+                        </div>
+                        <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 space-y-1">
+                            <div class="font-bold text-slate-800">Transaction Group</div>
+                            <p class="text-slate-600">Determines which statistics/indices get updated with reference to this document type (sales order, billing document, etc.).</p>
+                        </div>
+                        <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 space-y-1">
+                            <div class="font-bold text-slate-800">Quotation/Contract Messages = B</div>
+                            <p class="text-slate-600">Warns the user at order entry if an open quotation or contract already exists for this Sold-to Party and material — nudging them to reference it instead of creating a fresh order.</p>
+                        </div>
+                        <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 space-y-1">
+                            <div class="font-bold text-slate-800">Document Pricing Procedure</div>
+                            <p class="text-slate-600">This indicator, combined with the customer master's pricing procedure indicator and the sales area, determines which pricing procedure the order uses — see <a href="pricing.html" class="text-blue-600 font-semibold hover:underline">Configure Pricing</a>.</p>
+                        </div>
+                    </div>
+
+                    <div class="p-4 rounded-xl bg-cyan-50 border border-cyan-200 text-xs text-cyan-900">
+                        <strong>Also on the header:</strong> Status Profile (assigns a user status schema, also settable at item category), Credit Limit Check (blank = no check; see credit management, Chapter 10), Purchase Order Number check, Commitment Date check, Division copy + division-mismatch error check, and Incomplete Messages (blank = warn on save but still allow saving).
+                    </div>
+                </div>
+
+                <!-- Shipping / Billing / Delivery date -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                        <h3 class="font-bold text-slate-800 text-base flex items-center space-x-2">
+                            <i class="fa-solid fa-truck text-blue-600"></i>
+                            <span>Shipping & Billing Sections</span>
+                        </h3>
+                        <div class="bg-slate-900 text-white p-4 rounded-xl text-xs font-mono space-y-2">
+                            <div class="text-slate-400">Shipping</div>
+                            <div class="flex justify-between"><span>Delivery Type (auto)</span><span class="text-emerald-400 font-bold">LF</span></div>
+                            <div class="flex justify-between"><span>Immediate Delivery</span><span class="text-amber-400">Off</span></div>
+                            <div class="flex justify-between border-t border-slate-800 pt-2 text-slate-400"><span>Billing</span><span></span></div>
+                            <div class="flex justify-between"><span>Delivery-Related Billing Type</span><span class="text-emerald-400 font-bold">F2</span></div>
+                            <div class="flex justify-between"><span>Order-Related Billing Type</span><span class="text-emerald-400 font-bold">F2</span></div>
+                            <div class="flex justify-between"><span>Intercompany Billing Type</span><span class="text-emerald-400 font-bold">IV</span></div>
+                            <div class="flex justify-between"><span>Billing Block</span><span class="text-slate-400">None (default)</span></div>
+                        </div>
+                        <p class="text-slate-600 text-xs">Shipping conditions default from the customer master unless overridden on the document type — they drive shipping point determination (Chapter 6). A billing block here is commonly used defensively on credit memo types to force a manual release before the credit posts.</p>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                        <h3 class="font-bold text-slate-800 text-base flex items-center space-x-2">
+                            <i class="fa-solid fa-calendar-days text-violet-600"></i>
+                            <span>Requested Delivery Date & Contract Fields</span>
+                        </h3>
+                        <div class="space-y-2 text-xs">
+                            <div class="p-2.5 bg-slate-50 rounded-lg border border-slate-100"><strong class="text-slate-800">Lead Time in Days:</strong> normally 0 — no artificial padding on the requested delivery date.</div>
+                            <div class="p-2.5 bg-slate-50 rounded-lg border border-slate-100"><strong class="text-slate-800">Propose Delivery Date:</strong> checked, so today's date is proposed by default.</div>
+                            <div class="p-2.5 bg-slate-50 rounded-lg border border-slate-100"><strong class="text-slate-800">Proposal for Pricing Date:</strong> pricing date defaults from the reference document, requested delivery date, or current date.</div>
+                            <div class="p-2.5 bg-slate-50 rounded-lg border border-slate-100"><strong class="text-slate-800">Contract Profile / Group Reference Procedure / Follow-up Activity Type:</strong> only relevant for contract and master-contract document types (Chapter 4).</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- OVAZ -->
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                    <h3 class="font-bold text-slate-800 text-base flex items-center space-x-2">
+                        <i class="fa-solid fa-diagram-project text-orange-600"></i>
+                        <span>Restricting a Document Type to Specific Sales Areas [OVAZ]</span>
+                    </h3>
+                    <p class="text-slate-600 text-xs">Menu path: SPRO | Sales and Distribution | Sales | Sales Documents | Sales Document Header | Assign Sales Area To Sales Document Types.</p>
+                    <div class="bg-slate-900 text-slate-100 p-4 rounded-xl font-mono text-xs space-y-2">
+                        <div>Sales Org 1000 + Dist. Channel 10 + Division 00 <span class="text-slate-500">──▶</span> <span class="text-emerald-400 font-bold">Allowed Doc Type: ZTA</span></div>
+                    </div>
+                    <p class="text-slate-600 text-xs">If a document type is valid across <strong>every</strong> sales area, leave OVAZ blank for it entirely — no entry needed. Use OVAZ only when a document type must be restricted to specific sales organizations (e.g. a country-specific order type). Don't confuse this reference-sales-area assignment with common distribution channel/division master data sharing — they solve different problems.</p>
+                </div>
+
+                <!-- Special document types table -->
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                    <h3 class="font-bold text-slate-800 text-base flex items-center space-x-2">
+                        <i class="fa-solid fa-shapes text-orange-600"></i>
+                        <span>Standard Special Sales Document Types</span>
+                    </h3>
+                    <p class="text-slate-600 text-xs">Each of these reuses the same VOV8 field set above — only a handful of settings actually change per type.</p>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse text-xs">
+                            <thead>
+                                <tr class="bg-slate-100 border-b border-slate-200 text-slate-700">
+                                    <th class="p-3 font-mono font-bold">Type</th>
+                                    <th class="p-3 font-semibold">Process</th>
+                                    <th class="p-3 font-semibold">Key VOV8 Settings</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-100 text-slate-600">
+                                <tr class="hover:bg-slate-50">
+                                    <td class="p-3 font-bold text-orange-600 font-mono">AG (QT)</td>
+                                    <td class="p-3 font-sans">Quotation</td>
+                                    <td class="p-3 font-sans">Doc category B; screen sequence group AG; transaction group 2; item category AGN; has a validity period and can be copied forward into an order.</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50">
+                                    <td class="p-3 font-bold text-orange-600 font-mono">BV</td>
+                                    <td class="p-3 font-sans">Cash Sale</td>
+                                    <td class="p-3 font-sans">Immediate delivery + billing date default to today; delivery and cash invoice created automatically on save; invoice posts to a cash account, not A/R.</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50">
+                                    <td class="p-3 font-bold text-orange-600 font-mono">SO</td>
+                                    <td class="p-3 font-sans">Rush Order</td>
+                                    <td class="p-3 font-sans">Immediate delivery creation like BV, but billing follows the standard delivery-related flow (invoiced after goods issue, not printed at save).</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50">
+                                    <td class="p-3 font-bold text-orange-600 font-mono">G2</td>
+                                    <td class="p-3 font-sans">Credit Memo Request</td>
+                                    <td class="p-3 font-sans">Mandatory reference to originating invoice recommended; automatic billing block for release control; item category G2N; no goods movement.</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50">
+                                    <td class="p-3 font-bold text-orange-600 font-mono">L2</td>
+                                    <td class="p-3 font-sans">Debit Memo Request</td>
+                                    <td class="p-3 font-sans">Item category L2N; no goods movement; billing block rarely used since there's no fraud risk in undercharging correction.</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50">
+                                    <td class="p-3 font-bold text-orange-600 font-mono">RE</td>
+                                    <td class="p-3 font-sans">Returns</td>
+                                    <td class="p-3 font-sans">Doc category D; creates a returns delivery for physical goods receipt; mandatory reference to invoice recommended for traceability; order reason often required via incompletion procedure.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Takeaways -->
+                <div class="bg-slate-900 text-white p-6 rounded-2xl shadow-xl space-y-4">
+                    <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+                        <h3 class="text-base font-bold text-yellow-400 flex items-center space-x-2">
+                            <i class="fa-solid fa-key"></i>
+                            <span>Top Certification & Project Takeaways for Sales Document Type Configuration</span>
+                        </h3>
+                        <span class="text-xs font-mono bg-yellow-400/20 text-yellow-300 px-2.5 py-1 rounded-full font-bold">Must Know</span>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs font-sans">
+                        <div class="flex items-start space-x-2 bg-slate-800/80 p-3 rounded-xl border border-slate-700">
+                            <i class="fa-solid fa-check text-emerald-400 mt-0.5"></i>
+                            <span><strong>Copy, don't create from scratch:</strong> always copy the closest-matching SAP type so item category, schedule line category, and copy control determination come with it.</span>
+                        </div>
+                        <div class="flex items-start space-x-2 bg-slate-800/80 p-3 rounded-xl border border-slate-700">
+                            <i class="fa-solid fa-check text-emerald-400 mt-0.5"></i>
+                            <span><strong>Y/Z namespace only:</strong> never modify a standard SAP document type directly — copy it into a Z-type so upgrades never overwrite your changes.</span>
+                        </div>
+                        <div class="flex items-start space-x-2 bg-slate-800/80 p-3 rounded-xl border border-slate-700">
+                            <i class="fa-solid fa-check text-emerald-400 mt-0.5"></i>
+                            <span><strong>Document Pricing Procedure indicator</strong> here + the customer master indicator + sales area together determine the pricing procedure used — the single biggest cross-reference to remember.</span>
+                        </div>
+                        <div class="flex items-start space-x-2 bg-slate-800/80 p-3 rounded-xl border border-slate-700">
+                            <i class="fa-solid fa-check text-emerald-400 mt-0.5"></i>
+                            <span><strong>Number ranges don't transport automatically</strong> — a duplicate-number error after a transport means checking the number range table via SE16/SE16N in the target system.</span>
+                        </div>
+                        <div class="flex items-start space-x-2 bg-slate-800/80 p-3 rounded-xl border border-slate-700">
+                            <i class="fa-solid fa-check text-emerald-400 mt-0.5"></i>
+                            <span><strong>OVAZ is opt-in restriction:</strong> a document type with no OVAZ entry is valid for every sales area — only add entries when you need to limit usage.</span>
+                        </div>
+                        <div class="flex items-start space-x-2 bg-slate-800/80 p-3 rounded-xl border border-slate-700">
+                            <i class="fa-solid fa-check text-emerald-400 mt-0.5"></i>
+                            <span><strong>Special types reuse the same field set:</strong> cash sale, rush order, credit/debit memo requests, and returns all differ from a standard order by only a handful of settings, not a different mechanism.</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <div id="topicFooter"></div>
+        </main>
+    </div>
+
+    <script src="assets/js/topics.js"></script>
+    <script src="assets/js/nav.js"></script>
+    <script src="assets/js/common.js"></script>
+</body>
+</html>

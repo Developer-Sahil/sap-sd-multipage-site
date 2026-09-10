@@ -51,6 +51,15 @@ const TOPICS = [
     desc: 'Header/Item/Schedule Line architecture, the determination chain, and copy control t-codes.'
   },
   {
+    id: 'doc-type-config',
+    title: 'Configuring a Sales Document Type',
+    file: 'doc-type-config.html',
+    icon: 'fa-solid fa-sliders',
+    color: 'orange',
+    group: 'Core Guide',
+    desc: 'VOV8 field-by-field walkthrough, number ranges, OVAZ sales area assignment, and the standard special document types.'
+  },
+  {
     id: 'pricing',
     title: 'Configure Pricing',
     file: 'pricing.html',
